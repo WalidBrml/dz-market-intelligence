@@ -1,0 +1,30 @@
+{
+  "synthetic": true,
+  "disclaimer": "All data is synthetic and simulated. It does not describe real stores, customers, prices, sales or market statistics, and no finding derived from it applies to the real world.",
+  "source": "SQLite files dzmi_smoke_{ops,dwh}.sqlite",
+  "rows": {
+    "dim_date": 90,
+    "dim_store": 5,
+    "dim_product": 100,
+    "dim_customer": 600,
+    "dim_promotion": 4,
+    "fact_sales": 48216,
+    "fact_inventory_daily": 37710,
+    "fact_promotions": 2086,
+    "v_kpi_network_daily": 90,
+    "v_kpi_network_monthly": 4,
+    "v_kpi_category_monthly": 56,
+    "v_kpi_product": 100,
+    "v_kpi_store": 5,
+    "v_kpi_wilaya": 5,
+    "v_stock_availability_daily": 450,
+    "v_inventory_risk": 419,
+    "model_run": 0,
+    "fact_demand_forecast": 0,
+    "backtest_run": 1,
+    "forecast_backtest_metric": 720,
+    "v_forecast_accuracy": 18,
+    "v_forecast_accuracy_by_horizon": 180
+  },
+  "note": "dim_date.csv is dwh.v_dim_date_bi (dim_date plus time-intelligence helper columns). power_query/*.pq are Power BI queries with explicit column types for the star-schema CSV files (none are generated for the optional forecast files)."
+}

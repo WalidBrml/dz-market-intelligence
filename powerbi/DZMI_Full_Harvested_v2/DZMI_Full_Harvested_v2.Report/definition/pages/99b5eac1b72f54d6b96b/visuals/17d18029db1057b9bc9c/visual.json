@@ -1,0 +1,91 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "17d18029db1057b9bc9c",
+  "position": {
+    "x": 556,
+    "y": 480,
+    "z": 15000,
+    "height": 224,
+    "width": 420,
+    "tabOrder": 15000
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_origin"
+                    }
+                  },
+                  "Property": "origin_label"
+                }
+              },
+              "queryRef": "dim_origin.origin_label",
+              "nativeQueryRef": "origin_label",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_model"
+                    }
+                  },
+                  "Property": "model_label"
+                }
+              },
+              "queryRef": "dim_model.model_label",
+              "nativeQueryRef": "model_label",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Forecast MAE"
+                }
+              },
+              "queryRef": "_Measures.Forecast MAE",
+              "nativeQueryRef": "Forecast MAE"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Is the ranking stable? MAE by forecast origin'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

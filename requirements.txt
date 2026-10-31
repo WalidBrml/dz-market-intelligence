@@ -1,0 +1,14 @@
+# Milestone 1 (data engineering) dependencies.
+# Versions marked "tested" were executed in the development sandbox (Python 3.12.3).
+# Versions marked "range" could not be installed there (no network) and are
+# compatible ranges, NOT tested pins: re-pin with `pip freeze` after your first
+# successful run on your machine.
+pandas==3.0.2          # tested
+numpy==2.4.4           # tested
+PyYAML==6.0.3          # tested
+SQLAlchemy>=2.0.30,<2.1   # range (PostgreSQL path)
+psycopg[binary]>=3.2,<4   # range (PostgreSQL path)
+pytest>=8.0,<10           # range
+# Milestone 3 (forecasting): only the gbm model imports it, the other models and Milestones 1-2 work without it.
+scikit-learn==1.8.0    # tested (sandbox, with numpy 2.4.4 and pandas 3.0.2)
+# Added in later milestones: streamlit, plotly

@@ -1,0 +1,20 @@
+# Small, fast profile (5 stores x 100 products x 90 days) covering Ramadan and Eid al-Fitr 2025.
+extends: default
+profile: smoke
+seed: 42
+n_stores: 5
+n_products: 100
+start_date: 2025-02-01
+end_date: 2025-05-01
+n_customers: 600
+assortment_fraction: 0.85
+demand:
+  demand_scale: 0.5
+promotions:
+  campaigns_per_year: 12
+  product_share: 0.2
+  store_share: 0.8
+inventory:
+  service_z: 0.5               # deliberately lean so the smoke set contains visible stockouts
+  cover_days: 3
+  supplier_shortfall_prob: 0.06

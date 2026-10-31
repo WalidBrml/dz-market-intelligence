@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "fa61e8c7ddb45c398f78",
+  "position": {
+    "x": 180,
+    "y": 500,
+    "z": 18000,
+    "height": 96,
+    "width": 150,
+    "tabOrder": 18000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Critical SKUs"
+                }
+              },
+              "queryRef": "_Measures.Critical SKUs",
+              "nativeQueryRef": "Critical SKUs"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Critical (<3 days cover)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

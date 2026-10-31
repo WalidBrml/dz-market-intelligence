@@ -1,0 +1,68 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "fdd2cf3fda00501fabc2",
+  "position": {
+    "x": 640,
+    "y": 84,
+    "z": 3000,
+    "height": 300,
+    "width": 620,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Known limits"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Year-over-year is blank: the data covers 2025-02-01 to 2025-05-01 only. May holds a single day, so month-over-month is shown only for complete months."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Inventory risk is a snapshot of the latest loaded day and ignores the date slicer."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "No stored forecast exists (fact_demand_forecast is empty): this report shows backtest accuracy, not forecast-versus-actual lines."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Observed sales are truncated on stockout days; the no-stockout basis shows how much that matters."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Four rolling origins on a small sample cannot rank methods in general."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

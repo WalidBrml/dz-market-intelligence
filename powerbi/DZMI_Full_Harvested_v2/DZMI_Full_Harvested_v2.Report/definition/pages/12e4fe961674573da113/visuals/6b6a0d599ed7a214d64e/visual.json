@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "6b6a0d599ed7a214d64e",
+  "position": {
+    "x": 20,
+    "y": 9,
+    "z": 17000,
+    "height": 45,
+    "width": 439,
+    "tabOrder": 17000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Inventory Intelligence",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN",
+                      "fontSize": "18pt",
+                      "color": "#1f2937"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Header - Page Title'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

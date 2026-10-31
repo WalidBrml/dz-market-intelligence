@@ -1,0 +1,62 @@
+/// Horizon buckets. horizon_bucket is a DAY step (1-14) at series x day level but a WEEK number (1-2) at store x category x week level.
+table dim_horizon
+	lineageTag: 076de8b7-a26e-5af1-a629-c81d52b295a8
+
+	column horizon_key
+		dataType: string
+		isHidden
+		lineageTag: 0f2447fa-2275-5056-932b-2f1c99c0eab9
+		summarizeBy: none
+		sourceColumn: horizon_key
+
+	column level
+		dataType: string
+		isHidden
+		lineageTag: 25c67d63-e16a-549a-9be5-c43724ca48bc
+		summarizeBy: none
+		sourceColumn: level
+
+	column horizon_bucket
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4a32e85f-131e-56ec-aea8-a837591a2224
+		summarizeBy: none
+		sourceColumn: horizon_bucket
+
+	column horizon_label
+		dataType: string
+		lineageTag: 1931d77f-4ae8-5ce9-9163-d2d35874beae
+		summarizeBy: none
+		sourceColumn: horizon_label
+		sortByColumn: horizon_sort
+
+	column horizon_sort
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0ac417ab-f74f-5787-8099-f8c61980ac9c
+		summarizeBy: none
+		sourceColumn: horizon_sort
+
+	partition dim_horizon = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "forecast_backtest_metric.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"horizon_bucket", Int64.Type}}, "en-US"),
+				    Distinct = Table.Distinct(Table.SelectColumns(Typed, {"level", "horizon_bucket"})),
+				    Meta = [
+				        series_day = {"Series x day", 1, "Day"},
+				        store_category_week = {"Store x category x week", 2, "Week"}
+				    ],
+				    Lookup = (key as text, idx as number, fallback as any) as any =>
+				        let m = Record.FieldOrDefault(Meta, key, null) in if m = null then fallback else m{idx},
+				    Keyed = Table.AddColumn(Distinct, "horizon_key", each [level] & "|" & Text.From([horizon_bucket]), type text),
+				    Labelled = Table.AddColumn(Keyed, "horizon_label", each Lookup([level], 2, "Step") & " " & Text.From([horizon_bucket]), type text),
+				    Sorted = Table.AddColumn(Labelled, "horizon_sort", each Lookup([level], 1, 99) * 100 + [horizon_bucket], Int64.Type),
+				    Ordered = Table.ReorderColumns(Sorted, {"horizon_key", "level", "horizon_bucket", "horizon_label", "horizon_sort"})
+				in
+				    Ordered
+

@@ -1,0 +1,44 @@
+/// Backtest forecast origins (last day each model was allowed to see).
+table dim_origin
+	lineageTag: 3fbc6443-15aa-5692-8be3-e9dfc52f2a6f
+
+	column origin_date
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 36b9cdd0-b13f-57c9-b657-cfd4c866f43d
+		summarizeBy: none
+		sourceColumn: origin_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column origin_label
+		dataType: string
+		lineageTag: 48d6073e-3317-5d6b-95d5-6e199f36a390
+		summarizeBy: none
+		sourceColumn: origin_label
+		sortByColumn: origin_seq
+
+	column origin_seq
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3e5eb481-1076-5d75-8f8a-f831bc62758c
+		summarizeBy: none
+		sourceColumn: origin_seq
+
+	partition dim_origin = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "forecast_backtest_metric.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Distinct = Table.Distinct(Table.SelectColumns(Promoted, {"origin_date"})),
+				    Typed = Table.TransformColumnTypes(Distinct, {{"origin_date", type date}}, "en-US"),
+				    Ordered0 = Table.Sort(Typed, {{"origin_date", Order.Ascending}}),
+				    Seq = Table.AddIndexColumn(Ordered0, "origin_seq", 1, 1, Int64.Type),
+				    Labelled = Table.AddColumn(Seq, "origin_label", each Date.ToText([origin_date], "yyyy-MM-dd"), type text),
+				    Ordered = Table.ReorderColumns(Labelled, {"origin_date", "origin_label", "origin_seq"})
+				in
+				    Ordered
+

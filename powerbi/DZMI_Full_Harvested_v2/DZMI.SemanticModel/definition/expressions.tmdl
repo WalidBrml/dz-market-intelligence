@@ -1,0 +1,8 @@
+/// Folder with the exported CSV files. It MUST end with a backslash.
+expression pDataFolder = "SET_YOUR_LOCAL_DATA_FOLDER_HERE\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 7e04e396-7b10-52b4-9b37-d64faaedbb0c
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+

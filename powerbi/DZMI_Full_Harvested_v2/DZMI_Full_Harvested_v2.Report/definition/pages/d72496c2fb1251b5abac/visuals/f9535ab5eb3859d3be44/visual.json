@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "f9535ab5eb3859d3be44",
+  "position": {
+    "x": 20,
+    "y": 8,
+    "z": 0,
+    "height": 47,
+    "width": 820,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Sales Intelligence",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN",
+                      "fontSize": "18pt",
+                      "color": "#243b53"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

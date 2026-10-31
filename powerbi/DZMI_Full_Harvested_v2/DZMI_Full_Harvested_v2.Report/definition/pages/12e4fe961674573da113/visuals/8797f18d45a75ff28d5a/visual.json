@@ -1,0 +1,91 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "8797f18d45a75ff28d5a",
+  "position": {
+    "x": 656,
+    "y": 230,
+    "z": 13000,
+    "height": 220,
+    "width": 604,
+    "tabOrder": 13000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_store"
+                    }
+                  },
+                  "Property": "store_name"
+                }
+              },
+              "queryRef": "dim_store.store_name",
+              "nativeQueryRef": "store_name",
+              "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_product"
+                    }
+                  },
+                  "Property": "category_name"
+                }
+              },
+              "queryRef": "dim_product.category_name",
+              "nativeQueryRef": "category_name",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Stockout Rate"
+                }
+              },
+              "queryRef": "_Measures.Stockout Rate",
+              "nativeQueryRef": "Stockout Rate"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Stockout rate: category x store (colour scale: set in Format > Cell elements)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

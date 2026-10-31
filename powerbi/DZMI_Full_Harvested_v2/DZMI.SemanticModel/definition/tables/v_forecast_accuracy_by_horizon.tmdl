@@ -1,0 +1,156 @@
+/// SQL pooled accuracy per run x model x basis x level x horizon bucket (dwh.v_forecast_accuracy_by_horizon). Reconciliation only.
+table v_forecast_accuracy_by_horizon
+	lineageTag: 579bfba4-463d-51a0-9e8f-eaf8566411e7
+
+	column backtest_run_id
+		dataType: string
+		isHidden
+		lineageTag: 0cb609ac-71be-57cd-9cce-cc116f7dbcf9
+		summarizeBy: none
+		sourceColumn: backtest_run_id
+
+	column model_name
+		dataType: string
+		isHidden
+		lineageTag: 3a2a4018-9875-5e90-91b3-8e551739b7e8
+		summarizeBy: none
+		sourceColumn: model_name
+
+	column evaluation_basis
+		dataType: string
+		isHidden
+		lineageTag: 95e81bf0-a569-5b68-bc37-cb8c0ee4d7be
+		summarizeBy: none
+		sourceColumn: evaluation_basis
+
+	column level
+		dataType: string
+		isHidden
+		lineageTag: 2d1c9e5c-c866-59d1-9486-cd5a3d4a60c4
+		summarizeBy: none
+		sourceColumn: level
+
+	column horizon_bucket
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 21de9797-3105-5b9c-99e8-163c47551417
+		summarizeBy: none
+		sourceColumn: horizon_bucket
+
+	column n_origins
+		dataType: int64
+		formatString: 0
+		lineageTag: 03245d43-cb4b-54fe-bb21-9875da2c1dfc
+		summarizeBy: none
+		sourceColumn: n_origins
+
+	column n_obs
+		dataType: int64
+		formatString: 0
+		lineageTag: 241c3343-b5cd-5272-893e-0c68a3350322
+		summarizeBy: none
+		sourceColumn: n_obs
+
+	column sum_actual
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 87ba7e57-5e35-5ffa-ae8f-fcbfc53dc416
+		summarizeBy: none
+		sourceColumn: sum_actual
+
+	column sum_pred
+		dataType: double
+		formatString: #,0.00
+		lineageTag: c289b3c8-d05c-537f-be72-0e5ccaa971a7
+		summarizeBy: none
+		sourceColumn: sum_pred
+
+	column sum_abs_error
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 6caa5885-77c8-5f70-aa9a-e19ea247b0c1
+		summarizeBy: none
+		sourceColumn: sum_abs_error
+
+	column sum_sq_error
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 4f5836b6-c7cb-5b85-acb1-a6f1232105e0
+		summarizeBy: none
+		sourceColumn: sum_sq_error
+
+	column mae
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 6d7afa3f-891d-588f-8d9e-29e537a6e440
+		summarizeBy: none
+		sourceColumn: mae
+
+	column mse
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 9105b50a-549f-522f-917d-4e20423a8774
+		summarizeBy: none
+		sourceColumn: mse
+
+	column wape
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 3cd45f11-ba25-567c-861f-73f5d4b04785
+		summarizeBy: none
+		sourceColumn: wape
+
+	column bias
+		dataType: double
+		formatString: #,0.00
+		lineageTag: cbc0032a-b3e6-5a3f-b564-986ffe980994
+		summarizeBy: none
+		sourceColumn: bias
+
+	column skill_mae_vs_seasonal_naive
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 7e620605-7230-55a2-826e-a01732e07ecb
+		summarizeBy: none
+		sourceColumn: skill_mae_vs_seasonal_naive
+
+	column horizon_key
+		dataType: string
+		isHidden
+		lineageTag: 645a9bd0-579f-57c7-9249-3013420268b4
+		summarizeBy: none
+		sourceColumn: horizon_key
+
+	partition v_forecast_accuracy_by_horizon = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "v_forecast_accuracy_by_horizon.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"backtest_run_id", type text},
+				            {"model_name", type text},
+				            {"evaluation_basis", type text},
+				            {"level", type text},
+				            {"horizon_bucket", Int64.Type},
+				            {"n_origins", Int64.Type},
+				            {"n_obs", Int64.Type},
+				            {"sum_actual", type number},
+				            {"sum_pred", type number},
+				            {"sum_abs_error", type number},
+				            {"sum_sq_error", type number},
+				            {"mae", type number},
+				            {"mse", type number},
+				            {"wape", type number},
+				            {"bias", type number},
+				            {"skill_mae_vs_seasonal_naive", type number}
+				        },
+				        "en-US"
+				    ),
+				    Added_horizon_key = Table.AddColumn(Typed, "horizon_key", each [level] & "|" & Text.From([horizon_bucket]), type text)
+				in
+				    Added_horizon_key
+

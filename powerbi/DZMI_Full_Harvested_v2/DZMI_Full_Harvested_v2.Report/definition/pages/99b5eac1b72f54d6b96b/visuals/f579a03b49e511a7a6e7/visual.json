@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "f579a03b49e511a7a6e7",
+  "position": {
+    "x": 20,
+    "y": 9,
+    "z": 18000,
+    "height": 45,
+    "width": 439,
+    "tabOrder": 18000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Forecasting Performance",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "DIN",
+                      "fontSize": "18pt",
+                      "color": "#1f2937"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Header - Page Title'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

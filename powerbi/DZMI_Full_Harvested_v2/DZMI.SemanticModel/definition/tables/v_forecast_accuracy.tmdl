@@ -1,0 +1,139 @@
+/// SQL pooled accuracy per run x model x basis x level (dwh.v_forecast_accuracy). Used ONLY to reconcile the DAX measures.
+table v_forecast_accuracy
+	lineageTag: 49722b58-9860-5a3d-8710-9c2ac10c913b
+
+	column backtest_run_id
+		dataType: string
+		isHidden
+		lineageTag: 6abd0c02-5863-5432-aef8-2ad1eb9b42dc
+		summarizeBy: none
+		sourceColumn: backtest_run_id
+
+	column model_name
+		dataType: string
+		isHidden
+		lineageTag: ba465ad0-0ef1-5757-8863-a57464a23c41
+		summarizeBy: none
+		sourceColumn: model_name
+
+	column evaluation_basis
+		dataType: string
+		isHidden
+		lineageTag: 888a898a-f94d-5c6b-b1d7-39d0a2097973
+		summarizeBy: none
+		sourceColumn: evaluation_basis
+
+	column level
+		dataType: string
+		isHidden
+		lineageTag: 220d654c-a5dc-5fd9-841c-3c2d7d1ea68f
+		summarizeBy: none
+		sourceColumn: level
+
+	column n_origins
+		dataType: int64
+		formatString: 0
+		lineageTag: a102a580-d9b2-5d80-9bf2-cd59bf48554e
+		summarizeBy: none
+		sourceColumn: n_origins
+
+	column n_obs
+		dataType: int64
+		formatString: 0
+		lineageTag: 1001f96e-125a-57c8-8f8b-98ac66e9844c
+		summarizeBy: none
+		sourceColumn: n_obs
+
+	column sum_actual
+		dataType: double
+		formatString: #,0.00
+		lineageTag: c7229b6c-8906-552c-9487-9a44cb0e4dc5
+		summarizeBy: none
+		sourceColumn: sum_actual
+
+	column sum_pred
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 65d90a6e-4305-5aa8-ad08-431e07baecfe
+		summarizeBy: none
+		sourceColumn: sum_pred
+
+	column sum_abs_error
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 71479903-e2fd-5769-a94a-551fe7993135
+		summarizeBy: none
+		sourceColumn: sum_abs_error
+
+	column sum_sq_error
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 37970cff-1d76-59fd-b208-c95d29ec9aeb
+		summarizeBy: none
+		sourceColumn: sum_sq_error
+
+	column mae
+		dataType: double
+		formatString: #,0.00
+		lineageTag: a9f37fc8-cffa-58f5-9cc2-ec6f224b99bf
+		summarizeBy: none
+		sourceColumn: mae
+
+	column mse
+		dataType: double
+		formatString: #,0.00
+		lineageTag: d6b01902-8f36-5cd5-a895-64b578c2ca4c
+		summarizeBy: none
+		sourceColumn: mse
+
+	column wape
+		dataType: double
+		formatString: #,0.00
+		lineageTag: f5026848-bcf9-5b68-a62c-e2b18fb801d3
+		summarizeBy: none
+		sourceColumn: wape
+
+	column bias
+		dataType: double
+		formatString: #,0.00
+		lineageTag: f300ad74-63f8-56e5-a63d-4c503ef72f6a
+		summarizeBy: none
+		sourceColumn: bias
+
+	column skill_mae_vs_seasonal_naive
+		dataType: double
+		formatString: #,0.00
+		lineageTag: ef0508ea-59cd-5960-bb76-648bbd32f433
+		summarizeBy: none
+		sourceColumn: skill_mae_vs_seasonal_naive
+
+	partition v_forecast_accuracy = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "v_forecast_accuracy.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"backtest_run_id", type text},
+				            {"model_name", type text},
+				            {"evaluation_basis", type text},
+				            {"level", type text},
+				            {"n_origins", Int64.Type},
+				            {"n_obs", Int64.Type},
+				            {"sum_actual", type number},
+				            {"sum_pred", type number},
+				            {"sum_abs_error", type number},
+				            {"sum_sq_error", type number},
+				            {"mae", type number},
+				            {"mse", type number},
+				            {"wape", type number},
+				            {"bias", type number},
+				            {"skill_mae_vs_seasonal_naive", type number}
+				        },
+				        "en-US"
+				    )
+				in
+				    Typed
+

@@ -1,0 +1,192 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "2ae501897ffe55efb574",
+  "position": {
+    "x": 20,
+    "y": 286,
+    "z": 12000,
+    "height": 182,
+    "width": 744,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_model"
+                    }
+                  },
+                  "Property": "model_label"
+                }
+              },
+              "queryRef": "dim_model.model_label",
+              "nativeQueryRef": "model_label",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Forecast Observations"
+                }
+              },
+              "queryRef": "_Measures.Forecast Observations",
+              "nativeQueryRef": "Forecast Observations",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Forecast MAE"
+                }
+              },
+              "queryRef": "_Measures.Forecast MAE",
+              "nativeQueryRef": "Forecast MAE",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Forecast RMSE"
+                }
+              },
+              "queryRef": "_Measures.Forecast RMSE",
+              "nativeQueryRef": "Forecast RMSE",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Forecast WAPE"
+                }
+              },
+              "queryRef": "_Measures.Forecast WAPE",
+              "nativeQueryRef": "Forecast WAPE",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Forecast Bias"
+                }
+              },
+              "queryRef": "_Measures.Forecast Bias",
+              "nativeQueryRef": "Forecast Bias",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Skill vs Benchmark"
+                }
+              },
+              "queryRef": "_Measures.Skill vs Benchmark",
+              "nativeQueryRef": "Skill vs Benchmark",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "MAE Rank"
+                }
+              },
+              "queryRef": "_Measures.MAE Rank",
+              "nativeQueryRef": "MAE Rank",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Origins Won (lowest MAE)"
+                }
+              },
+              "queryRef": "_Measures.Origins Won (lowest MAE)",
+              "nativeQueryRef": "Origins Won (lowest MAE)",
+              "active": false
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Forecast MAE"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Model comparison (lower MAE / RMSE / WAPE is better)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

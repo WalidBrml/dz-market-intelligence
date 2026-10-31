@@ -1,0 +1,63 @@
+/// Promoted store x product x day (dwh.fact_promotions).
+table fact_promotions
+	lineageTag: 43ad9444-8694-5efa-bed7-624c3f2c7195
+
+	column store_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5e411f4c-f528-51ea-8206-277561b08a28
+		summarizeBy: none
+		sourceColumn: store_key
+
+	column product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2a8bacff-8021-5cb5-8f29-2dce497731bc
+		summarizeBy: none
+		sourceColumn: product_key
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 564c4d64-bdc3-5386-852e-ceac01e7abd5
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column promotion_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ddc9f48a-a3b7-5c5c-ad40-95abf14f6158
+		summarizeBy: none
+		sourceColumn: promotion_key
+
+	column discount_pct
+		dataType: int64
+		formatString: 0
+		lineageTag: c7e020d7-1899-5b7e-9a49-03c0dddd4f7c
+		summarizeBy: none
+		sourceColumn: discount_pct
+
+	partition fact_promotions = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "fact_promotions.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"store_key", Int64.Type},
+				            {"product_key", Int64.Type},
+				            {"date_key", Int64.Type},
+				            {"promotion_key", Int64.Type},
+				            {"discount_pct", Int64.Type}
+				        },
+				        "en-US"
+				    )
+				in
+				    Typed
+

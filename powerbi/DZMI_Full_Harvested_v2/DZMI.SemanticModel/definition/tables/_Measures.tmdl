@@ -1,0 +1,611 @@
+table _Measures
+	lineageTag: c5263a37-9aca-5823-a4cd-6d3534998591
+
+	/// Units sold (fact_sales.quantity).
+	measure 'Units Sold' = SUM ( fact_sales[quantity] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: eb8fc70f-4b05-5ce9-9f53-68282b0704af
+
+	/// Quantity x list price before discounts, DZD.
+	measure 'Gross Sales' = SUM ( fact_sales[gross_sales] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 90bf5392-0a50-5eae-a89f-1d901986ecfc
+
+	/// Discounts granted, DZD.
+	measure 'Discount Amount' = SUM ( fact_sales[discount_amount] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: f0497626-b982-5b04-af0d-19b45210d2ca
+
+	/// Gross sales minus discounts, DZD (no VAT modelled).
+	measure 'Net Sales' = SUM ( fact_sales[net_sales] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 25c80d97-8f8b-5b19-9a95-f37f492378dd
+
+	/// Cost of goods sold at the standard cost of the sale year, DZD.
+	measure COGS = SUM ( fact_sales[cogs] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 358409c2-afcb-5e2a-ae81-6e1fa7c651dd
+
+	/// Net sales minus COGS, DZD.
+	measure 'Gross Profit' = SUM ( fact_sales[gross_profit] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: b02ab852-a0dd-57a5-b813-4041cff89ad6
+
+	/// Gross profit / net sales.
+	measure 'Gross Margin %' = DIVIDE ( [Gross Profit], [Net Sales] )
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: 82c54e96-7306-5200-a5b2-a5f04bbf35f8
+
+	/// Net sales per unit, after discounts.
+	measure 'Average Selling Price' = DIVIDE ( [Net Sales], [Units Sold] )
+		formatString: #,0.00
+		displayFolder: Sales
+		lineageTag: 0eeb4641-22d8-5d9f-938e-8b83ab7c6ab1
+
+	/// Discount amount / gross sales.
+	measure 'Discount Rate' = DIVIDE ( [Discount Amount], [Gross Sales] )
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: 9b3720ee-fb5c-53bd-be6e-d5192e66a852
+
+	/// Distinct baskets. Not additive across products: only meaningful by date, month, store or wilaya.
+	measure Transactions = DISTINCTCOUNT ( fact_sales[transaction_id] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: f8162459-cd15-5258-9121-dbcefe414742
+
+	/// Net sales per basket.
+	measure 'Average Basket Value' = DIVIDE ( [Net Sales], [Transactions] )
+		formatString: #,0.00
+		displayFolder: Sales
+		lineageTag: c9e866e6-109c-5241-b47e-6e32324f8183
+
+	/// Net sales of lines that carry a promotion.
+	measure 'Promo Net Sales' = CALCULATE ( [Net Sales], FILTER ( fact_sales, NOT ISBLANK ( fact_sales[promotion_key] ) ) )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 5f17eaa2-c200-52c5-a264-b04c655b5520
+
+	/// Promo net sales / net sales.
+	measure 'Promo Sales Share' = DIVIDE ( [Promo Net Sales], [Net Sales] )
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: b0d34c49-de86-5820-a4f4-535f4e8aa9df
+
+	/// Net sales over the selected period / floor area of the stores in context. Not annualised.
+	measure 'Net Sales per sqm' = DIVIDE ( [Net Sales], SUM ( dim_store[floor_area_sqm] ) )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: db3f9b2f-4f15-5719-9f95-a5cad6b32f0b
+
+	/// Dates with at least one sale.
+	measure 'Sales Days' = CALCULATE ( DISTINCTCOUNT ( fact_sales[date_key] ) )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 215ee4fd-622b-5a99-a7d5-ab106b31a0af
+
+	/// Net sales per selling day.
+	measure 'Average Daily Net Sales' = DIVIDE ( [Net Sales], [Sales Days] )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: cdd9b068-5ca8-5bb0-ab5e-0e011712a5d6
+
+	/// Share of the net sales visible under the current slicers.
+	measure 'Net Sales % of Total' = DIVIDE ( [Net Sales], CALCULATE ( [Net Sales], ALLSELECTED () ) )
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: 9aa33cf4-4178-5042-ba72-39b9a7b27c8e
+
+	/// Net sales, shown only for the 10 best products under the current slicers (use as a bar-chart value).
+	measure 'Top 10 Product Net Sales' =
+			VAR _top = TOPN ( 10, ALLSELECTED ( dim_product[product_name] ), [Net Sales], DESC )
+			RETURN
+			    CALCULATE ( [Net Sales], KEEPFILTERS ( _top ) )
+		formatString: #,0
+		displayFolder: Sales
+		lineageTag: 886fc516-f5a3-5942-91b4-19d02a422330
+
+	/// Net sales for the same dates one year earlier (blank when those dates are not loaded).
+	measure 'Net Sales PY' = CALCULATE ( [Net Sales], SAMEPERIODLASTYEAR ( dim_date[full_date] ) )
+		formatString: #,0
+		displayFolder: Time intelligence
+		lineageTag: 59216276-26be-5fe5-9339-5b16612148b9
+
+	/// Year-over-year growth of net sales; blank when there is no prior-year comparison.
+	measure 'Net Sales YoY %' =
+			VAR _py = [Net Sales PY]
+			RETURN
+			    IF ( NOT ISBLANK ( _py ) && _py <> 0, DIVIDE ( [Net Sales] - _py, _py ) )
+		formatString: 0.0%
+		displayFolder: Time intelligence
+		lineageTag: d32bd2d6-fd3e-5497-bc48-4e181caadb8e
+
+	/// Units for the same dates one year earlier.
+	measure 'Units Sold PY' = CALCULATE ( [Units Sold], SAMEPERIODLASTYEAR ( dim_date[full_date] ) )
+		formatString: #,0
+		displayFolder: Time intelligence
+		lineageTag: 777dbb26-aaad-5037-aaad-b4199e9a1c55
+
+	/// Year-over-year growth of units.
+	measure 'Units Sold YoY %' =
+			VAR _py = [Units Sold PY]
+			RETURN
+			    IF ( NOT ISBLANK ( _py ) && _py <> 0, DIVIDE ( [Units Sold] - _py, _py ) )
+		formatString: 0.0%
+		displayFolder: Time intelligence
+		lineageTag: e9cf3f80-ae49-5c90-af32-eebe8fc4a079
+
+	/// Gross profit for the same dates one year earlier.
+	measure 'Gross Profit PY' = CALCULATE ( [Gross Profit], SAMEPERIODLASTYEAR ( dim_date[full_date] ) )
+		formatString: #,0
+		displayFolder: Time intelligence
+		lineageTag: b2ba5787-8990-54f8-9aa8-636b9a9e2632
+
+	/// Year-over-year growth of gross profit.
+	measure 'Gross Profit YoY %' =
+			VAR _py = [Gross Profit PY]
+			RETURN
+			    IF ( NOT ISBLANK ( _py ) && _py <> 0, DIVIDE ( [Gross Profit] - _py, _py ) )
+		formatString: 0.0%
+		displayFolder: Time intelligence
+		lineageTag: 91c20fd3-c11d-5a28-a559-f4fa508c8d87
+
+	/// Net sales of the previous calendar month.
+	measure 'Net Sales Prior Month' = CALCULATE ( [Net Sales], DATEADD ( dim_date[full_date], -1, MONTH ) )
+		formatString: #,0
+		displayFolder: Time intelligence
+		lineageTag: 102b902f-f06c-5e0f-82e2-1f036067002d
+
+	/// Month-over-month growth of monthly net sales, reported only when BOTH months are complete. Months have different numbers of days.
+	measure 'Net Sales MoM %' =
+			VAR _cur_ok = CALCULATE ( MIN ( dim_date[is_complete_month] ) )
+			VAR _prev = [Net Sales Prior Month]
+			VAR _prev_ok = CALCULATE ( MIN ( dim_date[is_complete_month] ), DATEADD ( dim_date[full_date], -1, MONTH ) )
+			RETURN
+			    IF ( _cur_ok = 1 && _prev_ok = 1 && NOT ISBLANK ( _prev ) && _prev <> 0,
+			         DIVIDE ( [Net Sales] - _prev, _prev ) )
+		formatString: 0.0%
+		displayFolder: Time intelligence
+		lineageTag: 7cb32dbd-ae80-5371-b7b5-acb930337d64
+
+	/// Year-to-date net sales.
+	measure 'Net Sales YTD' = TOTALYTD ( [Net Sales], dim_date[full_date] )
+		formatString: #,0
+		displayFolder: Time intelligence
+		lineageTag: 65386bba-7a89-56a6-82a8-347ce717a404
+
+	/// Latest date in the date table.
+	measure 'Last Loaded Date' = CALCULATE ( MAX ( dim_date[full_date] ), ALL ( dim_date ) )
+		formatString: yyyy-mm-dd
+		displayFolder: Time intelligence
+		lineageTag: 17ad01ab-671a-56b5-9d24-0afee80add4a
+
+	/// Net sales on Ramadan days (simulator calendar assumption).
+	measure 'Ramadan Net Sales' = CALCULATE ( [Net Sales], dim_date[is_ramadan] = 1 )
+		formatString: #,0
+		displayFolder: Calendar effects
+		lineageTag: 239e9406-0ffa-578b-b5b2-1840e79699c4
+
+	/// Ramadan net sales / net sales.
+	measure 'Ramadan Sales Share' = DIVIDE ( [Ramadan Net Sales], [Net Sales] )
+		formatString: 0.0%
+		displayFolder: Calendar effects
+		lineageTag: a0d7abe8-dbb6-5c12-a3fc-0bcdbe39c5cb
+
+	/// Text describing the loaded date range.
+	measure 'Data Coverage' =
+			VAR _min = CALCULATE ( MIN ( dim_date[full_date] ), ALL ( dim_date ) )
+			VAR _max = CALCULATE ( MAX ( dim_date[full_date] ), ALL ( dim_date ) )
+			RETURN
+			    "Synthetic data loaded: " & FORMAT ( _min, "yyyy-mm-dd" ) & " to " & FORMAT ( _max, "yyyy-mm-dd" )
+		displayFolder: Notes
+		lineageTag: 918aaab2-1caa-5621-ac1f-4cc2de42b26e
+
+	/// Explains blank YoY values.
+	measure 'YoY Availability Note' = IF ( ISBLANK ( [Net Sales PY] ), "Year-over-year is not available: the loaded data has no prior-year dates." )
+		displayFolder: Notes
+		lineageTag: 07e60803-dee6-5b08-819c-c5fe918b6dff
+
+	/// Net sales for cards, in millions of DZD.
+	measure 'KPI Net Sales' = [Net Sales]
+		formatString: #,0.0,,"M"
+		displayFolder: Cards
+		lineageTag: 865be43c-6606-5e1c-a6f4-7810d67f4064
+
+	/// Gross profit for cards, in millions of DZD.
+	measure 'KPI Gross Profit' = [Gross Profit]
+		formatString: #,0.0,,"M"
+		displayFolder: Cards
+		lineageTag: b6f60e29-809d-54b3-a9db-0ac07987b85f
+
+	/// Units sold for cards, in thousands.
+	measure 'KPI Units Sold' = [Units Sold]
+		formatString: #,0.0,"K"
+		displayFolder: Cards
+		lineageTag: 9bae444e-7f88-5bd9-afe0-0ce19a2d499b
+
+	/// Stock value for cards, in millions of DZD.
+	measure 'KPI Stock Value At Cost' = [Stock Value At Cost]
+		formatString: #,0.00,,"M"
+		displayFolder: Cards
+		lineageTag: 9e5f7e02-a750-5b05-9426-c903cfa99e69
+
+	/// Store x product x day inventory rows.
+	measure 'SKU Days' = COUNTROWS ( fact_inventory_daily )
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: f9741423-7b44-56ca-845a-0a46eef3fac3
+
+	/// SKU-days that ended with zero stock (same definition as stockout_flag).
+	measure 'Stockout SKU Days' = CALCULATE ( COUNTROWS ( fact_inventory_daily ), fact_inventory_daily[closing_stock] = 0 )
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: c815d1b2-a07c-5e6c-ad1b-358dff0917f9
+
+	/// Stockout SKU-days / SKU-days. Re-aggregates correctly at any level.
+	measure 'Stockout Rate' = DIVIDE ( COALESCE ( [Stockout SKU Days], 0 ), [SKU Days] )
+		formatString: 0.00%
+		displayFolder: Inventory
+		lineageTag: 104d7f2a-16da-5d98-933c-c681146c1c4f
+
+	/// 1 - stockout rate, blank when there are no SKU-days.
+	measure 'Availability Rate' = DIVIDE ( [SKU Days] - COALESCE ( [Stockout SKU Days], 0 ), [SKU Days] )
+		formatString: 0.00%
+		displayFolder: Inventory
+		lineageTag: 187c216a-32bb-579e-90d1-4b6baae72cc1
+
+	/// End-of-day stock on the LAST date in context (a snapshot: never summed over dates).
+	measure 'Closing Stock Units' = CALCULATE ( SUM ( fact_inventory_daily[closing_stock] ), LASTDATE ( dim_date[full_date] ) )
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: fb134c05-5287-5b8e-a660-b7f922dedbd3
+
+	/// Quantity on order on the last date in context.
+	measure 'On Order Units' = CALCULATE ( SUM ( fact_inventory_daily[on_order_qty] ), LASTDATE ( dim_date[full_date] ) )
+		formatString: #,0
+		displayFolder: Inventory
+		lineageTag: 0de3267d-4b29-5b2a-89e5-1b419773383a
+
+	/// Units sold per day over the 14 days ending at the last date in context.
+	measure 'Avg Daily Units 14D' =
+			VAR _end = MAX ( dim_date[full_date] )
+			VAR _window = DATESINPERIOD ( dim_date[full_date], _end, -14, DAY )
+			VAR _units = CALCULATE ( SUM ( fact_inventory_daily[units_sold] ), _window )
+			VAR _days = CALCULATE ( DISTINCTCOUNT ( fact_inventory_daily[date_key] ), _window )
+			RETURN
+			    DIVIDE ( _units, _days )
+		formatString: #,0.00
+		displayFolder: Inventory
+		lineageTag: 4bfc926a-5e8a-5d83-9c33-61e42c1879e1
+
+	/// Closing stock / average daily units, for the whole selection.
+	measure 'Days of Cover' = DIVIDE ( [Closing Stock Units], [Avg Daily Units 14D] )
+		formatString: #,0.0
+		displayFolder: Inventory
+		lineageTag: ce2af584-a8f1-59a1-9e33-24a6ece2a29b
+
+	/// Store x product pairs on the latest day.
+	measure 'Tracked SKUs' =
+			
+			CALCULATE(
+			    COUNTROWS(v_inventory_risk),
+			    REMOVEFILTERS(v_inventory_risk[risk_tier])
+			)
+		formatString: #,0
+		displayFolder: Inventory risk
+		lineageTag: 0951aef2-5ad4-564b-869b-a7cbc300acaf
+
+	/// SKUs with zero stock on the latest day.
+	measure 'Stockout SKUs Now' = CALCULATE ( COUNTROWS ( v_inventory_risk ), v_inventory_risk[risk_tier] = "Stockout" )
+		formatString: #,0
+		displayFolder: Inventory risk
+		lineageTag: 963c4b20-c604-54d2-b4ca-91df49131dca
+
+	/// SKUs with less than 3 days of cover.
+	measure 'Critical SKUs' = CALCULATE ( COUNTROWS ( v_inventory_risk ), v_inventory_risk[risk_tier] = "Critical" )
+		formatString: #,0
+		displayFolder: Inventory risk
+		lineageTag: 1f305c8a-9450-5f08-825b-afc63d08ba9f
+
+	/// SKUs with 3 to 7 days of cover.
+	measure 'Low Cover SKUs' = CALCULATE ( COUNTROWS ( v_inventory_risk ), v_inventory_risk[risk_tier] = "Low" )
+		formatString: #,0
+		displayFolder: Inventory risk
+		lineageTag: 536524b5-1644-57ba-bf1e-c6f24c8d2aa1
+
+	/// Stockout + Critical + Low cover.
+	measure 'At-Risk SKUs' = [Stockout SKUs Now] + [Critical SKUs] + [Low Cover SKUs]
+		formatString: #,0
+		displayFolder: Inventory risk
+		lineageTag: 3ca50d3f-ac95-5a45-8db6-763a161451d5
+
+	/// At-risk SKUs / tracked SKUs.
+	measure 'Test Risk Share' =
+			
+			DIVIDE(
+			    COUNTROWS(v_inventory_risk),
+			    CALCULATE(
+			        COUNTROWS(v_inventory_risk),
+			        REMOVEFILTERS(v_inventory_risk[risk_tier])
+			    ),
+			    0
+			)
+		formatString: 0.0%
+		displayFolder: Inventory risk
+		lineageTag: aae7c5b5-80e2-5b68-8323-e3d5f7380830
+
+	/// Closing stock x current standard cost, DZD.
+	measure 'Stock Value At Cost' = SUM ( v_inventory_risk[stock_value_at_current_cost] )
+		formatString: #,0
+		displayFolder: Inventory risk
+		lineageTag: 48e0b9e8-76bd-5848-9ab4-172267c07cda
+
+	/// Stock value of SKUs in the Stockout, Critical or Low tiers.
+	measure 'Stock Value At Risk' = CALCULATE ( SUM ( v_inventory_risk[stock_value_at_current_cost] ), v_inventory_risk[risk_tier] IN { "Stockout", "Critical", "Low" } )
+		formatString: #,0
+		displayFolder: Inventory risk
+		lineageTag: fcff79da-f72b-50b0-9b5c-4ba952dc3e81
+
+	/// Scored observations. Scope is forced to ONE level and ONE basis (defaults: series x day, observed).
+	measure 'Forecast Observations' =
+			VAR _lvl = SELECTEDVALUE ( dim_eval_level[level], "series_day" )
+			VAR _bas = SELECTEDVALUE ( dim_eval_basis[evaluation_basis], "observed" )
+			RETURN
+			    CALCULATE (
+			        SUM ( forecast_backtest_metric[n_obs] ),
+			        dim_eval_level[level] = _lvl,
+			        dim_eval_basis[evaluation_basis] = _bas
+			    )
+		formatString: #,0
+		displayFolder: Forecasting
+		lineageTag: ee0457fb-a371-5b06-bb1c-08926822c151
+
+	/// Sum of actual units over the scored observations.
+	measure 'Forecast Actual Sum' =
+			VAR _lvl = SELECTEDVALUE ( dim_eval_level[level], "series_day" )
+			VAR _bas = SELECTEDVALUE ( dim_eval_basis[evaluation_basis], "observed" )
+			RETURN
+			    CALCULATE (
+			        SUM ( forecast_backtest_metric[sum_actual] ),
+			        dim_eval_level[level] = _lvl,
+			        dim_eval_basis[evaluation_basis] = _bas
+			    )
+		formatString: #,0.0
+		isHidden
+		displayFolder: Forecasting
+		lineageTag: 31fdbec1-8f90-5a06-a632-99843a9efa70
+
+	/// Sum of forecast units over the scored observations.
+	measure 'Forecast Predicted Sum' =
+			VAR _lvl = SELECTEDVALUE ( dim_eval_level[level], "series_day" )
+			VAR _bas = SELECTEDVALUE ( dim_eval_basis[evaluation_basis], "observed" )
+			RETURN
+			    CALCULATE (
+			        SUM ( forecast_backtest_metric[sum_pred] ),
+			        dim_eval_level[level] = _lvl,
+			        dim_eval_basis[evaluation_basis] = _bas
+			    )
+		formatString: #,0.0
+		isHidden
+		displayFolder: Forecasting
+		lineageTag: cfd635de-5686-5d4c-bbc4-2f4b031fd609
+
+	/// Sum of |forecast - actual|.
+	measure 'Forecast Abs Error Sum' =
+			VAR _lvl = SELECTEDVALUE ( dim_eval_level[level], "series_day" )
+			VAR _bas = SELECTEDVALUE ( dim_eval_basis[evaluation_basis], "observed" )
+			RETURN
+			    CALCULATE (
+			        SUM ( forecast_backtest_metric[sum_abs_error] ),
+			        dim_eval_level[level] = _lvl,
+			        dim_eval_basis[evaluation_basis] = _bas
+			    )
+		formatString: #,0.0
+		isHidden
+		displayFolder: Forecasting
+		lineageTag: be65a49f-cfb8-5b1e-a480-d3279a761b48
+
+	/// Sum of (forecast - actual)^2.
+	measure 'Forecast Sq Error Sum' =
+			VAR _lvl = SELECTEDVALUE ( dim_eval_level[level], "series_day" )
+			VAR _bas = SELECTEDVALUE ( dim_eval_basis[evaluation_basis], "observed" )
+			RETURN
+			    CALCULATE (
+			        SUM ( forecast_backtest_metric[sum_sq_error] ),
+			        dim_eval_level[level] = _lvl,
+			        dim_eval_basis[evaluation_basis] = _bas
+			    )
+		formatString: #,0.0
+		isHidden
+		displayFolder: Forecasting
+		lineageTag: 0571b368-b856-56a2-ba84-60b07ebd7e7b
+
+	/// Mean absolute error = sum of absolute errors / observations. Lower is better.
+	measure 'Forecast MAE' = DIVIDE ( [Forecast Abs Error Sum], [Forecast Observations] )
+		formatString: 0.000
+		displayFolder: Forecasting
+		lineageTag: 9099dc6c-a919-5173-b67d-963565ee21a6
+
+	/// Root mean squared error from the additive sums. Lower is better.
+	measure 'Forecast RMSE' = SQRT ( DIVIDE ( [Forecast Sq Error Sum], [Forecast Observations] ) )
+		formatString: 0.000
+		displayFolder: Forecasting
+		lineageTag: 37c1f425-c99f-520a-ba14-a1dc6435b0e3
+
+	/// Sum of absolute errors / sum of actuals. Lower is better; can exceed 100% on intermittent demand.
+	measure 'Forecast WAPE' = DIVIDE ( [Forecast Abs Error Sum], [Forecast Actual Sum] )
+		formatString: 0.0%
+		displayFolder: Forecasting
+		lineageTag: 035525d9-33f4-55a5-9190-5548e0c663ce
+
+	/// (forecast - actual) / actual over the scored observations. Positive = over-forecast.
+	measure 'Forecast Bias' = DIVIDE ( [Forecast Predicted Sum] - [Forecast Actual Sum], [Forecast Actual Sum] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Forecasting
+		lineageTag: 1b2f908e-0f4a-574f-90cc-82b7b07eb99c
+
+	/// MAE of the seasonal-naive benchmark under the same scope.
+	measure 'Benchmark MAE' = CALCULATE ( [Forecast MAE], dim_model[model_name] = "seasonal_naive" )
+		formatString: 0.000
+		displayFolder: Forecasting
+		lineageTag: c212c1b0-88eb-51f3-90eb-7f9ddd5902f5
+
+	/// 1 - MAE / benchmark MAE. Positive = better than seasonal naive.
+	measure 'Skill vs Benchmark' = IF ( NOT ISBLANK ( [Benchmark MAE] ) && [Benchmark MAE] <> 0, 1 - DIVIDE ( [Forecast MAE], [Benchmark MAE] ) )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Forecasting
+		lineageTag: 5ca56619-4e7f-5492-8b42-6548a5a6fcb2
+
+	/// 1 = lowest MAE among the selected models.
+	measure 'MAE Rank' = IF ( ISBLANK ( [Forecast MAE] ), BLANK (), RANKX ( ALLSELECTED ( dim_model[model_label] ), [Forecast MAE], , ASC, DENSE ) )
+		formatString: 0
+		displayFolder: Forecasting
+		lineageTag: bfcb59be-cdee-5678-996c-00d6240bde61
+
+	/// Lowest MAE among the models in context.
+	measure 'Best MAE' = MINX ( ADDCOLUMNS ( VALUES ( dim_model[model_label] ), "@mae", [Forecast MAE] ), [@mae] )
+		formatString: 0.000
+		displayFolder: Forecasting
+		lineageTag: 36696482-63e6-594e-8faa-895bf1f41916
+
+	/// Model with the lowest MAE in the current scope (ties: alphabetical).
+	measure 'Best Model (MAE)' =
+			VAR _t = ADDCOLUMNS ( VALUES ( dim_model[model_label] ), "@mae", [Forecast MAE] )
+			VAR _min = MINX ( _t, [@mae] )
+			RETURN
+			    IF ( NOT ISBLANK ( _min ), MINX ( FILTER ( _t, [@mae] = _min ), dim_model[model_label] ) )
+		displayFolder: Forecasting
+		lineageTag: a104b296-2c21-5e84-9466-de3ed3fa852b
+
+	/// Improvement of the best model over the seasonal-naive benchmark.
+	measure 'Best vs Benchmark' = IF ( NOT ISBLANK ( [Benchmark MAE] ) && [Benchmark MAE] <> 0, 1 - DIVIDE ( [Best MAE], [Benchmark MAE] ) )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Forecasting
+		lineageTag: 4faafd48-08b6-53f5-b9c9-276268b6d729
+
+	/// Number of selected models with positive skill.
+	measure 'Models Beating Benchmark' =
+			VAR _t = ADDCOLUMNS ( VALUES ( dim_model[model_label] ), "@s", [Skill vs Benchmark] )
+			RETURN
+			    COUNTROWS ( FILTER ( _t, [@s] > 0 ) )
+		formatString: 0
+		displayFolder: Forecasting
+		lineageTag: ec5db630-5a77-5a3b-9464-c02eee0d21ad
+
+	/// Number of origins on which the model has the lowest MAE: shows whether a ranking is stable.
+	measure 'Origins Won (lowest MAE)' =
+			SUMX (
+			    VALUES ( dim_origin[origin_date] ),
+			    VAR _mine = CALCULATE ( [Forecast MAE] )
+			    VAR _best = CALCULATE ( MINX ( ALLSELECTED ( dim_model[model_label] ), [Forecast MAE] ) )
+			    RETURN IF ( NOT ISBLANK ( _mine ) && _mine = _best, 1, 0 )
+			)
+		formatString: 0
+		displayFolder: Forecasting
+		lineageTag: e1414de5-a4eb-5042-a231-1dd4f70b6a07
+
+	/// Shows the evaluation basis and level actually used (a default applies until exactly one is selected).
+	measure 'Forecast Scope Message' =
+			VAR _lvl = SELECTEDVALUE ( dim_eval_level[level_label], "Series x day (default)" )
+			VAR _bas = SELECTEDVALUE ( dim_eval_basis[basis_label], "Observed sales (default)" )
+			RETURN
+			    "Scope: " & _bas & "  |  " & _lvl & "  |  pooled over all selected origins"
+		displayFolder: Forecasting
+		lineageTag: 27adf495-6b94-54b9-835a-e8543bd500a8
+
+	/// Explains an empty forecasting visual.
+	measure 'Forecast Empty Note' = IF ( ISBLANK ( [Forecast Observations] ), "No data for this basis / level combination. The no-stockout basis exists only at series x day level." )
+		displayFolder: Forecasting
+		lineageTag: f4d2408a-daab-58e7-b668-06089730270a
+
+	/// Axis title that matches the selected level.
+	measure 'Horizon Axis Title' =
+			IF ( SELECTEDVALUE ( dim_eval_level[level], "series_day" ) = "store_category_week",
+			     "Forecast week after the origin (store x category x week level)",
+			     "Forecast day after the origin (series x day level)" )
+		displayFolder: Forecasting
+		lineageTag: 74d4e961-10f7-5e8d-a1d2-537eaef3fd0f
+
+	/// Run id of the backtest.
+	measure 'Backtest Run ID' = SELECTEDVALUE ( backtest_run[backtest_run_id], "multiple runs" )
+		displayFolder: Forecasting
+		lineageTag: f5ab9883-bd7e-50e1-be7e-03d4504e0b65
+
+	/// Store x product series scored.
+	measure 'Series Evaluated' = MAX ( backtest_run[n_series] )
+		formatString: #,0
+		displayFolder: Forecasting
+		lineageTag: c77fce08-b4f9-5ea6-b3a3-d2641e4b12f3
+
+	/// Rolling origins in the run.
+	measure 'Origins Count' = DISTINCTCOUNT ( dim_origin[origin_date] )
+		formatString: #,0
+		displayFolder: Forecasting
+		lineageTag: 4e0f0ef9-2740-5835-b6d9-ce57262e3a48
+
+	/// Forecast horizon in days.
+	measure 'Horizon Days' = MAX ( backtest_run[horizon_days] )
+		formatString: #,0
+		displayFolder: Forecasting
+		lineageTag: 71d189f5-967a-5673-a4a3-30df4288753f
+
+	/// Treatment of stockout days.
+	measure 'Censoring Policy' = SELECTEDVALUE ( backtest_run[censor_policy], "n/a" )
+		displayFolder: Forecasting
+		lineageTag: 44957bb7-50c9-55d4-b1ee-ffa95c1fce55
+
+	/// MAE as stored by the SQL view dwh.v_forecast_accuracy (valid at model x basis x level grain).
+	measure 'SQL View MAE' = IF ( COUNTROWS ( v_forecast_accuracy ) = 1, MAX ( v_forecast_accuracy[mae] ) )
+		formatString: 0.000000
+		displayFolder: Reconciliation
+		lineageTag: 5a4a48e0-9cf5-59a6-8ff7-ce1577d25c52
+
+	/// DAX MAE minus SQL MAE (should be 0).
+	measure 'MAE Check Difference' = IF ( NOT ISBLANK ( [SQL View MAE] ) && NOT ISBLANK ( [Forecast MAE] ), [Forecast MAE] - [SQL View MAE] )
+		formatString: 0.000000
+		displayFolder: Reconciliation
+		lineageTag: ea4dbd79-63a2-581b-bf9f-20ff239e476b
+
+	/// OK when the DAX measure reproduces the SQL view.
+	measure 'MAE Check Status' = IF ( ISBLANK ( [MAE Check Difference] ), BLANK (), IF ( ABS ( [MAE Check Difference] ) < 0.000001, "OK", "CHECK" ) )
+		displayFolder: Reconciliation
+		lineageTag: 60436e0a-0a80-5ada-bd01-4f7926ffb7dc
+
+	measure 'At-Risk SKU Share' =
+			
+			DIVIDE(
+			    CALCULATE(
+			        COUNTROWS(v_inventory_risk),
+			        KEEPFILTERS(
+			            v_inventory_risk[risk_tier]
+			                IN {"Stockout", "Critical", "Low"}
+			        )
+			    ),
+			    CALCULATE(
+			        COUNTROWS(v_inventory_risk),
+			        REMOVEFILTERS(v_inventory_risk[risk_tier])
+			    ),
+			    0
+			)
+		formatString: 0.0\ %;-0.0\ %;0.0\ %
+		displayFolder: Inventory risk
+		lineageTag: b7463753-70f1-4530-a70c-067776c39ff5
+
+	column Placeholder
+		dataType: int64
+		isHidden
+		lineageTag: 2ff1f4ec-1f3e-5a5d-823b-78bdb373f717
+		summarizeBy: none
+		sourceColumn: Placeholder
+
+	partition _Measures = m
+		mode: import
+		source = #table(type table [Placeholder = Int64.Type], {})
+

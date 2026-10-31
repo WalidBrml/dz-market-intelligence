@@ -1,0 +1,60 @@
+﻿# Python environments and cache
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+build/
+dist/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# IDE and operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local databases and logs
+*.sqlite
+*.sqlite3
+*.db
+*.log
+
+# Backups, reviews and temporary archives
+backup*/
+*_review/
+*inspection*/
+*.zip
+
+# Node dependencies
+node_modules/
+
+# Power BI local settings and cache
+**/.pbi/
+**/localSettings.json
+**/cache.abf
+
+# Old development snapshots
+*.before_*
+
+# Original working copy and temporary upload staging folder
+/dz-market-intelligence/
+/dzmi_powerbi_upload/
+
+# Internal milestone review folders
+/milestone2_review/
+/milestone3_review/
+
+# Project archives
+*.zip
+
+# Temporary Power BI backups
+*.tmdl.backup

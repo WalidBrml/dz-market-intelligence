@@ -1,0 +1,104 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "a1ac29529af056078ec8",
+  "position": {
+    "x": 780,
+    "y": 286,
+    "z": 13000,
+    "height": 182,
+    "width": 480,
+    "tabOrder": 13000
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_model"
+                    }
+                  },
+                  "Property": "model_label"
+                }
+              },
+              "queryRef": "dim_model.model_label",
+              "nativeQueryRef": "model_label",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Forecast MAE"
+                }
+              },
+              "queryRef": "_Measures.Forecast MAE",
+              "nativeQueryRef": "Forecast MAE"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Benchmark MAE"
+                }
+              },
+              "queryRef": "_Measures.Benchmark MAE",
+              "nativeQueryRef": "Benchmark MAE"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Forecast MAE"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'MAE by model vs the seasonal-naive benchmark (lower is better)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,223 @@
+/// Inventory position of every store x product on the LATEST loaded day (dwh.v_inventory_risk). A snapshot: it does not follow the date slicer.
+table v_inventory_risk
+	lineageTag: a90e796b-8eea-50e6-ad17-41eaf895d224
+
+	column store_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fbe610e9-3a36-5b4c-8095-470f61cb4f47
+		summarizeBy: none
+		sourceColumn: store_key
+
+	column store_code
+		dataType: string
+		lineageTag: 2386df9e-7915-5b10-a65d-18a9921270c5
+		summarizeBy: none
+		sourceColumn: store_code
+
+	column store_name
+		dataType: string
+		isHidden
+		lineageTag: 3bbfb8e1-f246-5cb0-a58d-943443779da4
+		summarizeBy: none
+		sourceColumn: store_name
+
+	column wilaya
+		dataType: string
+		isHidden
+		lineageTag: e5c1e05e-8300-5e50-ab42-beae1264fb7f
+		summarizeBy: none
+		sourceColumn: wilaya
+
+	column product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bab15da2-23fa-59e2-9b29-3d519b48d120
+		summarizeBy: none
+		sourceColumn: product_key
+
+	column sku
+		dataType: string
+		lineageTag: 0c09c18c-171a-52af-8e04-9f52f57b34dc
+		summarizeBy: none
+		sourceColumn: sku
+
+	column product_name
+		dataType: string
+		lineageTag: 30fa9f36-0016-554e-81d5-e0c07da71473
+		summarizeBy: none
+		sourceColumn: product_name
+
+	column category_name
+		dataType: string
+		isHidden
+		lineageTag: 5cbcc0bf-5671-593f-bd47-9369fd50d986
+		summarizeBy: none
+		sourceColumn: category_name
+
+	column is_perishable
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b48e0bd1-d5a4-52a3-a02a-27c898908565
+		summarizeBy: sum
+		sourceColumn: is_perishable
+
+		annotation SummarizationSetBy = Automatic
+
+	column snapshot_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 763d5f83-6fba-57d8-9e6e-9dd0a65576a0
+		summarizeBy: sum
+		sourceColumn: snapshot_date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column snapshot_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 3bca7537-e331-57ae-b3e5-5579e2b1e363
+		summarizeBy: none
+		sourceColumn: snapshot_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column closing_stock
+		dataType: int64
+		formatString: 0
+		lineageTag: f6d5cdd0-2d08-5747-9cad-819c159459c6
+		summarizeBy: sum
+		sourceColumn: closing_stock
+
+		annotation SummarizationSetBy = Automatic
+
+	column on_order_qty
+		dataType: int64
+		formatString: 0
+		lineageTag: fdae1275-4e19-52a8-98f9-1fd15d69eeac
+		summarizeBy: sum
+		sourceColumn: on_order_qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column units_sold_14d
+		dataType: int64
+		formatString: 0
+		lineageTag: e5839cfb-f184-57c0-a417-78e7e237723c
+		summarizeBy: sum
+		sourceColumn: units_sold_14d
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_observed_14d
+		dataType: int64
+		formatString: 0
+		lineageTag: c4e941ac-4943-5395-9a2b-7fd2c5dec43f
+		summarizeBy: sum
+		sourceColumn: days_observed_14d
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_daily_units_14d
+		dataType: double
+		formatString: #,0.00
+		lineageTag: cda78f5b-8365-5a7c-b788-7fef548649a5
+		summarizeBy: sum
+		sourceColumn: avg_daily_units_14d
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_of_cover
+		dataType: double
+		formatString: #,0.0
+		lineageTag: ae56ca14-f1ac-5222-8c25-ebd7b18a68ae
+		summarizeBy: sum
+		sourceColumn: days_of_cover
+
+		annotation SummarizationSetBy = Automatic
+
+	column days_of_cover_incl_on_order
+		dataType: double
+		formatString: #,0.0
+		lineageTag: 8c9efb63-7fe8-5f44-95b9-7203509cdc8d
+		summarizeBy: sum
+		sourceColumn: days_of_cover_incl_on_order
+
+		annotation SummarizationSetBy = Automatic
+
+	column stockout_days_14d
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c18c25a-b550-53ed-988b-52f8d8561c0d
+		summarizeBy: sum
+		sourceColumn: stockout_days_14d
+
+		annotation SummarizationSetBy = Automatic
+
+	column stock_value_at_current_cost
+		dataType: double
+		formatString: #,0
+		lineageTag: ec4fbbf8-1663-5962-88d6-b099b2f584c0
+		summarizeBy: sum
+		sourceColumn: stock_value_at_current_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_tier
+		dataType: string
+		lineageTag: d0618a59-6c18-5a23-b85a-5042cf9ac138
+		summarizeBy: none
+		sourceColumn: risk_tier
+		sortByColumn: risk_tier_order
+
+	column risk_tier_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2d587884-e1ee-51ab-a12d-5d4561dbbd62
+		summarizeBy: sum
+		sourceColumn: risk_tier_order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition v_inventory_risk = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "v_inventory_risk.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"store_key", Int64.Type},
+				            {"store_code", type text},
+				            {"store_name", type text},
+				            {"wilaya", type text},
+				            {"product_key", Int64.Type},
+				            {"sku", type text},
+				            {"product_name", type text},
+				            {"category_name", type text},
+				            {"is_perishable", Int64.Type},
+				            {"snapshot_date_key", Int64.Type},
+				            {"snapshot_date", type date},
+				            {"closing_stock", Int64.Type},
+				            {"on_order_qty", Int64.Type},
+				            {"units_sold_14d", Int64.Type},
+				            {"days_observed_14d", Int64.Type},
+				            {"avg_daily_units_14d", type number},
+				            {"days_of_cover", type number},
+				            {"days_of_cover_incl_on_order", type number},
+				            {"stockout_days_14d", Int64.Type},
+				            {"stock_value_at_current_cost", type number},
+				            {"risk_tier", type text},
+				            {"risk_tier_order", Int64.Type}
+				        },
+				        "en-US"
+				    )
+				in
+				    Typed
+

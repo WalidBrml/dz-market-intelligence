@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dzmi"
+version = "0.1.0"
+description = "DZ Market Intelligence - synthetic Algerian supermarket BI and demand forecasting platform"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = [
+  "pandas>=3.0,<3.1",
+  "numpy>=2.0",
+  "PyYAML>=6.0",
+  "SQLAlchemy>=2.0.30,<2.1",
+  "psycopg[binary]>=3.2,<4",
+  "scikit-learn>=1.8,<2",
+]
+
+[project.scripts]
+dzmi = "dzmi.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "tests"]
+testpaths = ["tests"]
+addopts = "-q"

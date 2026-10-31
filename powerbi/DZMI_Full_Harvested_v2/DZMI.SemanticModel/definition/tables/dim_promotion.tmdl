@@ -1,0 +1,70 @@
+/// Promotion campaigns (dwh.dim_promotion).
+table dim_promotion
+	lineageTag: e65e71d2-b964-5ee0-b783-368a328c8ed0
+
+	column promotion_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4284d6a6-c218-5856-b783-0e71f7337bbd
+		summarizeBy: none
+		sourceColumn: promotion_key
+
+	column promotion_name
+		dataType: string
+		lineageTag: 2a5c7620-edb3-5d76-9861-269c1c32e841
+		summarizeBy: none
+		sourceColumn: promotion_name
+
+	column promotion_type
+		dataType: string
+		lineageTag: 75c40c6c-7b88-583c-bef9-b13e9da3fd2c
+		summarizeBy: none
+		sourceColumn: promotion_type
+
+	column discount_pct
+		dataType: int64
+		formatString: 0
+		lineageTag: 88ad5aa9-cc10-54d0-8e10-c4c2f872a5e8
+		summarizeBy: none
+		sourceColumn: discount_pct
+
+	column start_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: d400b8d4-2df1-56ba-9183-4179607fa7e4
+		summarizeBy: none
+		sourceColumn: start_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column end_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 5aad52cf-970f-56c6-b330-55fb2e6417c3
+		summarizeBy: none
+		sourceColumn: end_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dim_promotion = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "dim_promotion.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"promotion_key", Int64.Type},
+				            {"promotion_name", type text},
+				            {"promotion_type", type text},
+				            {"discount_pct", Int64.Type},
+				            {"start_date", type date},
+				            {"end_date", type date}
+				        },
+				        "en-US"
+				    )
+				in
+				    Typed
+

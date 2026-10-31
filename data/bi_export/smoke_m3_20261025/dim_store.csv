@@ -1,0 +1,6 @@
+store_key,store_id,store_code,store_name,wilaya,city,store_format,floor_area_sqm,opened_date
+1,1,ST01,Alger Centre,Alger,Algiers,Hypermarket,4686,2018-12-14
+2,2,ST02,Blida Ville,Blida,Blida,Supermarket,1773,2023-07-31
+3,3,ST03,Oran Es Senia,Oran,Oran,Hypermarket,6140,2017-07-18
+4,4,ST04,Constantine Centre,Constantine,Constantine,Supermarket,2348,2022-11-29
+5,5,ST05,Sétif El Hidhab,Sétif,Sétif,Supermarket,2572,2013-05-16

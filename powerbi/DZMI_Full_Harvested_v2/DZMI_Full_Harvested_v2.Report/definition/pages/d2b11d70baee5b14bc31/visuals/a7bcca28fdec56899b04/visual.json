@@ -1,0 +1,144 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "a7bcca28fdec56899b04",
+  "position": {
+    "x": 20,
+    "y": 396,
+    "z": 4000,
+    "height": 308,
+    "width": 1240,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_model"
+                    }
+                  },
+                  "Property": "model_label"
+                }
+              },
+              "queryRef": "dim_model.model_label",
+              "nativeQueryRef": "model_label",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_eval_basis"
+                    }
+                  },
+                  "Property": "basis_label"
+                }
+              },
+              "queryRef": "dim_eval_basis.basis_label",
+              "nativeQueryRef": "basis_label",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_eval_level"
+                    }
+                  },
+                  "Property": "level_label"
+                }
+              },
+              "queryRef": "dim_eval_level.level_label",
+              "nativeQueryRef": "level_label",
+              "active": true
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Forecast MAE"
+                }
+              },
+              "queryRef": "_Measures.Forecast MAE",
+              "nativeQueryRef": "Forecast MAE",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "SQL View MAE"
+                }
+              },
+              "queryRef": "_Measures.SQL View MAE",
+              "nativeQueryRef": "SQL View MAE",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "MAE Check Difference"
+                }
+              },
+              "queryRef": "_Measures.MAE Check Difference",
+              "nativeQueryRef": "MAE Check Difference",
+              "active": false
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "MAE Check Status"
+                }
+              },
+              "queryRef": "_Measures.MAE Check Status",
+              "nativeQueryRef": "MAE Check Status",
+              "active": false
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Reconciliation: DAX MAE (from additive sums) vs the SQL view dwh.v_forecast_accuracy'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

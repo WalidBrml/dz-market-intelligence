@@ -1,0 +1,35 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["dim_date","dim_store","dim_product","dim_customer","dim_promotion","fact_sales","fact_inventory_daily","fact_promotions","v_inventory_risk","forecast_backtest_metric","backtest_run","v_forecast_accuracy","v_forecast_accuracy_by_horizon","dim_model","dim_eval_basis","dim_eval_level","dim_horizon","dim_origin","_Measures","pDataFolder"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_date
+ref table dim_store
+ref table dim_product
+ref table dim_customer
+ref table dim_promotion
+ref table fact_sales
+ref table fact_inventory_daily
+ref table fact_promotions
+ref table v_inventory_risk
+ref table forecast_backtest_metric
+ref table backtest_run
+ref table v_forecast_accuracy
+ref table v_forecast_accuracy_by_horizon
+ref table dim_model
+ref table dim_eval_basis
+ref table dim_eval_level
+ref table dim_horizon
+ref table dim_origin
+ref table _Measures
+

@@ -1,0 +1,33 @@
+# Milestone 3 forecasting settings. SIMULATION ASSUMPTIONS and tuning choices, not real market statistics.
+# A profile (smoke, default) can override any key under `profiles:`; command-line options override both.
+horizon_days: 14             # forecast 1..14 days ahead of each origin
+seasonal_period: 7           # weekly rhythm (the simulator uses weekday multipliers)
+seed: 42                     # sampling of series and gradient boosting
+censor_policy: exclude       # exclude = stockout days are not used as training/level information; keep = use them as sales
+models: [naive, seasonal_naive, moving_average, ses_weekday, croston_sba, gbm]
+
+backtest:
+  min_train_days: 365        # first origin needs at least this much history
+  n_origins: 6               # number of rolling origins (the last one ends at the last loaded day)
+  origin_step_days: 28       # days between two origins
+  max_series: 300            # stratified sample of store x product series (0 = all series)
+
+model_params:
+  moving_average: {window: 28}
+  seasonal_naive: {max_back_weeks: 4}
+  ses_weekday: {alphas: [0.05, 0.1, 0.2, 0.3], fit_window: 56, index_window: 84}
+  croston_sba: {alpha: 0.1}
+  gbm:
+    max_iter: 150
+    learning_rate: 0.08
+    max_leaf_nodes: 31
+    min_samples_leaf: 40
+    l2_regularization: 1.0
+    train_origin_step: 7     # training examples are built from origins every 7 days
+    max_train_origins: 52    # ... using at most the 52 most recent ones
+    min_history_days: 28     # an origin needs 28 days of history to build its features
+
+profiles:
+  smoke:                     # 90 days of data: short windows so the demo runs in seconds
+    backtest: {min_train_days: 42, n_origins: 4, origin_step_days: 7, max_series: 0}
+  default: {}

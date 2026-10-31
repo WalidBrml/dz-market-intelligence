@@ -1,0 +1,90 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "fac0697f393952daa6ab",
+  "position": {
+    "x": 20,
+    "y": 462,
+    "z": 14000,
+    "height": 242,
+    "width": 300,
+    "tabOrder": 14000
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "v_inventory_risk"
+                    }
+                  },
+                  "Property": "risk_tier"
+                }
+              },
+              "queryRef": "v_inventory_risk.risk_tier",
+              "nativeQueryRef": "risk_tier",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Tracked SKUs"
+                }
+              },
+              "queryRef": "_Measures.Tracked SKUs",
+              "nativeQueryRef": "Tracked SKUs"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "v_inventory_risk"
+                  }
+                },
+                "Property": "risk_tier"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'SKUs by risk tier (latest day)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

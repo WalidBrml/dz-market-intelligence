@@ -1,0 +1,104 @@
+/// Product attributes (dwh.dim_product).
+table dim_product
+	lineageTag: d54e5310-a740-55d0-b29d-18e7d05bf91f
+
+	column product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f5592166-d654-5a78-9722-3cb418c0357f
+		summarizeBy: none
+		sourceColumn: product_key
+
+	column product_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2eb74c54-9685-5d94-a1db-e59aced960cb
+		summarizeBy: none
+		sourceColumn: product_id
+
+	column sku
+		dataType: string
+		lineageTag: c3a590e6-d99b-566f-98f0-217012235734
+		summarizeBy: none
+		sourceColumn: sku
+
+	column product_name
+		dataType: string
+		lineageTag: f3eb0fde-e0e9-58c3-b6da-df52c14c3d4d
+		summarizeBy: none
+		sourceColumn: product_name
+
+	column category_name
+		dataType: string
+		lineageTag: 6747c44e-92ca-573e-91b8-31edbed5a173
+		summarizeBy: none
+		sourceColumn: category_name
+
+	column is_perishable
+		dataType: boolean
+		isHidden
+		lineageTag: 9d1eec2a-71f6-5768-b6db-ce5e9055a986
+		summarizeBy: none
+		sourceColumn: is_perishable
+
+	column brand
+		dataType: string
+		lineageTag: 174c5dbe-fd39-5c38-87ae-57c9764a3a8a
+		summarizeBy: none
+		sourceColumn: brand
+
+	column pack_size
+		dataType: int64
+		formatString: 0
+		lineageTag: 16549b42-635c-5b27-99dc-0f4422d92058
+		summarizeBy: none
+		sourceColumn: pack_size
+
+	column current_list_price
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 266f581c-6850-5182-99d6-13a484eeb3e5
+		summarizeBy: none
+		sourceColumn: current_list_price
+
+	column current_unit_cost
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 08f0b2fa-bc22-5b30-b340-d53415eca0bf
+		summarizeBy: none
+		sourceColumn: current_unit_cost
+
+	column perishability
+		dataType: string
+		lineageTag: b0f3a697-a193-5f5d-8796-a78d936f2b04
+		summarizeBy: none
+		sourceColumn: perishability
+
+	partition dim_product = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "dim_product.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"product_key", Int64.Type},
+				            {"product_id", Int64.Type},
+				            {"sku", type text},
+				            {"product_name", type text},
+				            {"category_name", type text},
+				            {"is_perishable", type logical},
+				            {"brand", type text},
+				            {"pack_size", Int64.Type},
+				            {"current_list_price", type number},
+				            {"current_unit_cost", type number}
+				        },
+				        "en-US"
+				    ),
+				    Added_perishability = Table.AddColumn(Typed, "perishability", each if [is_perishable] then "Perishable" else "Non-perishable", type text)
+				in
+				    Added_perishability
+

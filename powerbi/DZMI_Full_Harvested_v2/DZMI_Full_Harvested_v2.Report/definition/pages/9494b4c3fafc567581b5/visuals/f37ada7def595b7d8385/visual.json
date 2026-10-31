@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "f37ada7def595b7d8385",
+  "position": {
+    "x": 180,
+    "y": 604,
+    "z": 20000,
+    "height": 96,
+    "width": 150,
+    "tabOrder": 20000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "KPI Stock Value At Cost"
+                }
+              },
+              "queryRef": "_Measures.KPI Stock Value At Cost",
+              "nativeQueryRef": "KPI Stock Value At Cost"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Stock value at cost (M DZD)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

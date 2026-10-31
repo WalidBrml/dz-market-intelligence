@@ -1,0 +1,256 @@
+/// Calendar (dwh.v_dim_date_bi): one row per loaded day. Marked as the date table on full_date.
+table dim_date
+	lineageTag: 3200a16a-9c76-5a08-a00f-6c357e5b4200
+	dataCategory: Time
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6ec9f1ed-519d-5bae-aa55-fc5b9b72eed4
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column full_date
+		dataType: dateTime
+		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: a3153ca6-ee96-5f08-8e48-820092482cd3
+		summarizeBy: none
+		sourceColumn: full_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 72842eb0-e6c5-5774-9f14-0b3d845106cc
+		summarizeBy: none
+		sourceColumn: year
+
+	column quarter
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6b57676b-a950-501c-88b7-7df014cb2d5a
+		summarizeBy: none
+		sourceColumn: quarter
+
+	column month
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: dea8db0d-7469-596a-9467-5a5d86393b3c
+		summarizeBy: none
+		sourceColumn: month
+
+	column month_name
+		dataType: string
+		lineageTag: a4c653d0-37e7-5ec2-aaad-4658cdd2166a
+		summarizeBy: none
+		sourceColumn: month_name
+		sortByColumn: month
+
+	column day_of_month
+		dataType: int64
+		formatString: 0
+		lineageTag: bea83921-de7a-5a0b-910a-d52956b326c6
+		summarizeBy: none
+		sourceColumn: day_of_month
+
+	column day_of_week
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bef24efa-d85c-52db-8bfe-e02378194519
+		summarizeBy: none
+		sourceColumn: day_of_week
+
+	column day_name
+		dataType: string
+		lineageTag: 44767c86-dee1-580d-9101-9f1ff1f60090
+		summarizeBy: none
+		sourceColumn: day_name
+		sortByColumn: day_of_week
+
+	column iso_week
+		dataType: int64
+		formatString: 0
+		lineageTag: cc4b79d7-614f-59ca-9783-e8b8eb7265d7
+		summarizeBy: none
+		sourceColumn: iso_week
+
+	column is_weekend
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8143f598-bb1b-5f9f-9a57-f64d39d5f1ee
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+	column is_ramadan
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f2869eff-142b-57e5-ae6b-cca5853e440e
+		summarizeBy: none
+		sourceColumn: is_ramadan
+
+	column ramadan_day
+		dataType: int64
+		formatString: 0
+		lineageTag: e54cf03a-a6e1-5c47-903b-0baff42491ee
+		summarizeBy: none
+		sourceColumn: ramadan_day
+
+	column is_eid_al_fitr
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9563f077-31d3-5413-b6a8-74922685a566
+		summarizeBy: none
+		sourceColumn: is_eid_al_fitr
+
+	column is_eid_al_adha
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5fec580a-6774-505a-b617-ed52c8ce89c4
+		summarizeBy: none
+		sourceColumn: is_eid_al_adha
+
+	column is_pre_eid_al_fitr
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 20b99f16-8dff-538b-843a-7daac5fdc88b
+		summarizeBy: none
+		sourceColumn: is_pre_eid_al_fitr
+
+	column is_pre_eid_al_adha
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 1690647c-b645-5b58-a90e-4e631ea93ea9
+		summarizeBy: none
+		sourceColumn: is_pre_eid_al_adha
+
+	column year_month
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ef114464-cddb-56f8-bc11-0530d53b6b73
+		summarizeBy: none
+		sourceColumn: year_month
+
+	column year_month_label
+		dataType: string
+		lineageTag: 507ff467-650a-5f51-ba07-3c4a0ff02c8f
+		summarizeBy: none
+		sourceColumn: year_month_label
+		sortByColumn: year_month
+
+	column year_quarter_label
+		dataType: string
+		lineageTag: c5f5f9b5-359a-5481-abea-67011a9b1095
+		summarizeBy: none
+		sourceColumn: year_quarter_label
+
+	column days_in_month
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: db1603fc-13d0-5a26-99f9-db8b881445e4
+		summarizeBy: none
+		sourceColumn: days_in_month
+
+	column is_complete_month
+		dataType: int64
+		formatString: 0
+		lineageTag: e45c0e38-6a77-50c8-9a5b-ed83792f2e6e
+		summarizeBy: none
+		sourceColumn: is_complete_month
+
+	column prior_year_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4cda1ff7-6e49-5a4b-ac36-645363b29d2a
+		summarizeBy: none
+		sourceColumn: prior_year_date_key
+
+	column day_seq
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fc25d1d0-0b9b-5f19-9877-e97c082755e4
+		summarizeBy: none
+		sourceColumn: day_seq
+
+	column is_last_loaded_date
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e863b0b4-ba03-5678-8260-c4f71e9bccaf
+		summarizeBy: none
+		sourceColumn: is_last_loaded_date
+
+	column calendar_period
+		dataType: string
+		lineageTag: 8da200df-8c6b-526c-947c-89fba7fd2a41
+		summarizeBy: none
+		sourceColumn: calendar_period
+
+	column week_part
+		dataType: string
+		lineageTag: a3cc64b4-842d-5e1d-b74c-202492619112
+		summarizeBy: none
+		sourceColumn: week_part
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "dim_date.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"date_key", Int64.Type},
+				            {"full_date", type date},
+				            {"year", Int64.Type},
+				            {"quarter", Int64.Type},
+				            {"month", Int64.Type},
+				            {"month_name", type text},
+				            {"day_of_month", Int64.Type},
+				            {"day_of_week", Int64.Type},
+				            {"day_name", type text},
+				            {"iso_week", Int64.Type},
+				            {"is_weekend", Int64.Type},
+				            {"is_ramadan", Int64.Type},
+				            {"ramadan_day", Int64.Type},
+				            {"is_eid_al_fitr", Int64.Type},
+				            {"is_eid_al_adha", Int64.Type},
+				            {"is_pre_eid_al_fitr", Int64.Type},
+				            {"is_pre_eid_al_adha", Int64.Type},
+				            {"year_month", Int64.Type},
+				            {"year_month_label", type text},
+				            {"year_quarter_label", type text},
+				            {"days_in_month", Int64.Type},
+				            {"is_complete_month", Int64.Type},
+				            {"prior_year_date_key", Int64.Type},
+				            {"day_seq", Int64.Type},
+				            {"is_last_loaded_date", Int64.Type}
+				        },
+				        "en-US"
+				    ),
+				    Added_calendar_period = Table.AddColumn(Typed, "calendar_period", each if [is_eid_al_fitr] = 1 then "Eid al-Fitr" else if [is_eid_al_adha] = 1 then "Eid al-Adha" else if [is_ramadan] = 1 then "Ramadan" else "Regular days", type text),
+				    Added_week_part = Table.AddColumn(Added_calendar_period, "week_part", each if [is_weekend] = 1 then "Weekend (Fri-Sat)" else "Weekday", type text)
+				in
+				    Added_week_part
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

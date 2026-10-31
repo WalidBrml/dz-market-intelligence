@@ -1,0 +1,119 @@
+/// One row per backtest run (dwh.backtest_run).
+table backtest_run
+	lineageTag: 591d17b3-55b2-5d54-8833-53053d207f98
+
+	column backtest_run_id
+		dataType: string
+		lineageTag: 66244dde-4d33-5ab7-9f10-d4d23652555a
+		summarizeBy: none
+		sourceColumn: backtest_run_id
+
+	column created_at
+		dataType: dateTime
+		formatString: yyyy-mm-dd hh:nn:ss
+		lineageTag: 9617ee9f-a683-5458-bbd0-4abf62fa5235
+		summarizeBy: none
+		sourceColumn: created_at
+
+	column profile
+		dataType: string
+		lineageTag: 4871635a-1a63-5c1c-9bb0-bf2459c7e16d
+		summarizeBy: none
+		sourceColumn: profile
+
+	column horizon_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d8a03ea-1e16-52cd-a057-4171fa7e7646
+		summarizeBy: none
+		sourceColumn: horizon_days
+
+	column n_origins
+		dataType: int64
+		formatString: 0
+		lineageTag: ff6266ef-0197-550b-8780-a6c97a306d92
+		summarizeBy: none
+		sourceColumn: n_origins
+
+	column origin_step_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 62745c47-e79e-597a-bd3e-d6992f259512
+		summarizeBy: none
+		sourceColumn: origin_step_days
+
+	column min_train_days
+		dataType: int64
+		formatString: 0
+		lineageTag: c45a3013-3bef-51e8-9d85-241fea1bb048
+		summarizeBy: none
+		sourceColumn: min_train_days
+
+	column n_series
+		dataType: int64
+		formatString: 0
+		lineageTag: aebea391-5fbc-54d1-ae75-da1868ac0565
+		summarizeBy: none
+		sourceColumn: n_series
+
+	column censor_policy
+		dataType: string
+		lineageTag: e22345ec-d579-5ff9-919b-d97e64177134
+		summarizeBy: none
+		sourceColumn: censor_policy
+
+	column seed
+		dataType: int64
+		formatString: 0
+		lineageTag: 24767af5-0453-5e04-b2ae-8d54141ba297
+		summarizeBy: none
+		sourceColumn: seed
+
+	column models
+		dataType: string
+		isHidden
+		lineageTag: 70fa6e1c-d77c-5592-a2d2-90dfe617b057
+		summarizeBy: none
+		sourceColumn: models
+
+	column settings_json
+		dataType: string
+		isHidden
+		lineageTag: 7ffebba7-72f1-523e-978f-2411000b847d
+		summarizeBy: none
+		sourceColumn: settings_json
+
+	column notes
+		dataType: string
+		lineageTag: 90b579ff-be6e-536f-88cd-38976c1f41d3
+		summarizeBy: none
+		sourceColumn: notes
+
+	partition backtest_run = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "backtest_run.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"backtest_run_id", type text},
+				            {"created_at", type datetime},
+				            {"profile", type text},
+				            {"horizon_days", Int64.Type},
+				            {"n_origins", Int64.Type},
+				            {"origin_step_days", Int64.Type},
+				            {"min_train_days", Int64.Type},
+				            {"n_series", Int64.Type},
+				            {"censor_policy", type text},
+				            {"seed", Int64.Type},
+				            {"models", type text},
+				            {"settings_json", type text},
+				            {"notes", type text}
+				        },
+				        "en-US"
+				    )
+				in
+				    Typed
+

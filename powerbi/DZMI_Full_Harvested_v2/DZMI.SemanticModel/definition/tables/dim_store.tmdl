@@ -1,0 +1,95 @@
+/// Store attributes (dwh.dim_store).
+table dim_store
+	lineageTag: 83c0d8b9-f7bc-5e81-9ced-f502a28a154e
+
+	column store_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f3ba0c7a-8e42-5f0a-a79b-d88d2ffb11c3
+		summarizeBy: none
+		sourceColumn: store_key
+
+	column store_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 62973a39-2191-519b-8c62-4bb37aadcd43
+		summarizeBy: sum
+		sourceColumn: store_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column store_code
+		dataType: string
+		lineageTag: ef781f24-226e-5b36-9a69-17b7ce43dd86
+		summarizeBy: none
+		sourceColumn: store_code
+
+	column store_name
+		dataType: string
+		lineageTag: a584a8f9-2bef-5f99-bb16-c40e3d3f503e
+		summarizeBy: none
+		sourceColumn: store_name
+
+	column wilaya
+		dataType: string
+		lineageTag: 3dfc7c62-978b-5a47-ab9b-e0bb39701f82
+		summarizeBy: none
+		sourceColumn: wilaya
+
+	column city
+		dataType: string
+		lineageTag: d2980d38-5616-5312-8f69-cf8349785df2
+		summarizeBy: none
+		sourceColumn: city
+
+	column store_format
+		dataType: string
+		lineageTag: c9b60d84-f70e-570c-888e-10f3c2f2fa99
+		summarizeBy: none
+		sourceColumn: store_format
+
+	column floor_area_sqm
+		dataType: int64
+		formatString: 0
+		lineageTag: a6e4430e-6621-59ff-9384-bdeea9891174
+		summarizeBy: sum
+		sourceColumn: floor_area_sqm
+
+		annotation SummarizationSetBy = Automatic
+
+	column opened_date
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 94a586dd-86f5-52fc-a869-8340ce7bc1cb
+		summarizeBy: none
+		sourceColumn: opened_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dim_store = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "dim_store.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"store_key", Int64.Type},
+				            {"store_id", Int64.Type},
+				            {"store_code", type text},
+				            {"store_name", type text},
+				            {"wilaya", type text},
+				            {"city", type text},
+				            {"store_format", type text},
+				            {"floor_area_sqm", Int64.Type},
+				            {"opened_date", type date}
+				        },
+				        "en-US"
+				    )
+				in
+				    Typed
+

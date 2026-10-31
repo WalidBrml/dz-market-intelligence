@@ -1,0 +1,119 @@
+/// Backtest error SUMS per model x evaluation basis x level x origin x horizon bucket (dwh.forecast_backtest_metric). Additive: MAE, RMSE, WAPE and bias are always derived from these sums, never averaged.
+table forecast_backtest_metric
+	lineageTag: 3c6512d6-8ef9-53a6-8dbf-8056b4087396
+
+	column backtest_run_id
+		dataType: string
+		isHidden
+		lineageTag: ca86ea94-ffb3-546c-840f-61b0c6ed9bab
+		summarizeBy: none
+		sourceColumn: backtest_run_id
+
+	column model_name
+		dataType: string
+		isHidden
+		lineageTag: acf8df7b-47cf-547d-b71f-22b4dbd802d8
+		summarizeBy: none
+		sourceColumn: model_name
+
+	column evaluation_basis
+		dataType: string
+		isHidden
+		lineageTag: 7df8ec18-fba4-5bf8-a2f1-5fb51e5d7e9a
+		summarizeBy: none
+		sourceColumn: evaluation_basis
+
+	column level
+		dataType: string
+		isHidden
+		lineageTag: e4dde758-5ae1-541a-afb5-db39ef46aa48
+		summarizeBy: none
+		sourceColumn: level
+
+	column origin_date
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 80dedebd-0bed-5226-a958-00ee791e9f18
+		summarizeBy: none
+		sourceColumn: origin_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column horizon_bucket
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 78befcfc-c219-5d47-ac5c-abc2727636d0
+		summarizeBy: none
+		sourceColumn: horizon_bucket
+
+	column n_obs
+		dataType: int64
+		formatString: 0
+		lineageTag: ee25b8a3-824a-5508-9185-503df34fa794
+		summarizeBy: none
+		sourceColumn: n_obs
+
+	column sum_actual
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 2b6cfcb4-b015-5da4-a282-f1ba98e5b42a
+		summarizeBy: none
+		sourceColumn: sum_actual
+
+	column sum_pred
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 29a43881-e541-5a1b-8871-f1dd305199a6
+		summarizeBy: none
+		sourceColumn: sum_pred
+
+	column sum_abs_error
+		dataType: double
+		formatString: #,0.00
+		lineageTag: cc5ad985-64ec-5da4-a509-c742a4a61bbe
+		summarizeBy: none
+		sourceColumn: sum_abs_error
+
+	column sum_sq_error
+		dataType: double
+		formatString: #,0.00
+		lineageTag: b8c6bb45-820f-58ab-95dc-2eab25c59658
+		summarizeBy: none
+		sourceColumn: sum_sq_error
+
+	column horizon_key
+		dataType: string
+		isHidden
+		lineageTag: 5edfbb43-59b6-5c2a-8383-4df38faa8ed7
+		summarizeBy: none
+		sourceColumn: horizon_key
+
+	partition forecast_backtest_metric = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "forecast_backtest_metric.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"backtest_run_id", type text},
+				            {"model_name", type text},
+				            {"evaluation_basis", type text},
+				            {"level", type text},
+				            {"origin_date", type date},
+				            {"horizon_bucket", Int64.Type},
+				            {"n_obs", Int64.Type},
+				            {"sum_actual", type number},
+				            {"sum_pred", type number},
+				            {"sum_abs_error", type number},
+				            {"sum_sq_error", type number}
+				        },
+				        "en-US"
+				    ),
+				    Added_horizon_key = Table.AddColumn(Typed, "horizon_key", each [level] & "|" & Text.From([horizon_bucket]), type text)
+				in
+				    Added_horizon_key
+

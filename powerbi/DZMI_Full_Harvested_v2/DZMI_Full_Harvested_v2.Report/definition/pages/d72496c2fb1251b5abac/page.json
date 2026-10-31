@@ -1,0 +1,95 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "d72496c2fb1251b5abac",
+  "displayName": "Sales Intelligence",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "width": {
+            "expr": {
+              "Literal": {
+                "Value": "201L"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "051a67ce3507507e8d70",
+      "target": "53bb036244c559b490ca",
+      "type": "DataFilter"
+    },
+    {
+      "source": "352a0bbe58b5ca3a40ec",
+      "target": "53bb036244c559b490ca",
+      "type": "NoFilter"
+    },
+    {
+      "source": "53bb036244c559b490ca",
+      "target": "f465062612fe56158820",
+      "type": "DataFilter"
+    },
+    {
+      "source": "9844a5a7592c5a7998c4",
+      "target": "98b5319fd162549ebc96",
+      "type": "DataFilter"
+    },
+    {
+      "source": "9844a5a7592c5a7998c4",
+      "target": "53bb036244c559b490ca",
+      "type": "DataFilter"
+    },
+    {
+      "source": "6de8bb9819d05c709c4a",
+      "target": "53bb036244c559b490ca",
+      "type": "DataFilter"
+    },
+    {
+      "source": "98b5319fd162549ebc96",
+      "target": "53bb036244c559b490ca",
+      "type": "NoFilter"
+    },
+    {
+      "source": "13328abbd6a559cbb917",
+      "target": "53bb036244c559b490ca",
+      "type": "DataFilter"
+    },
+    {
+      "source": "c6745734547d5a399d8b",
+      "target": "53bb036244c559b490ca",
+      "type": "DataFilter"
+    },
+    {
+      "source": "bf122e89bc905e0f8e8b",
+      "target": "53bb036244c559b490ca",
+      "type": "DataFilter"
+    },
+    {
+      "source": "6150d68f8c7656349a6b",
+      "target": "53bb036244c559b490ca",
+      "type": "DataFilter"
+    },
+    {
+      "source": "7824252e23ae56749986",
+      "target": "53bb036244c559b490ca",
+      "type": "DataFilter"
+    },
+    {
+      "source": "c9f830179b6758b39ff3",
+      "target": "53bb036244c559b490ca",
+      "type": "DataFilter"
+    },
+    {
+      "source": "f465062612fe56158820",
+      "target": "53bb036244c559b490ca",
+      "type": "NoFilter"
+    }
+  ]
+}

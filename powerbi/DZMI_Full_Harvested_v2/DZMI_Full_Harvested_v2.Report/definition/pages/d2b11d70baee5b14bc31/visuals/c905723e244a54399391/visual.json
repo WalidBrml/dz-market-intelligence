@@ -1,0 +1,82 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "c905723e244a54399391",
+  "position": {
+    "x": 20,
+    "y": 84,
+    "z": 2000,
+    "height": 300,
+    "width": 600,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "What this report is"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "A portfolio demonstration built on SYNTHETIC data from the DZ Market Intelligence simulator. No store, customer, price, sale or forecast score here describes the real Algerian market."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "How horizon_bucket is defined"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "At the series x day level it is the forecast day step (1-14 days after the origin). At the store x category x week level it is the forecast week (1-2). The two levels have different scales and are never shown on one axis."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "How accuracy is computed"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Errors are stored as additive sums per model, basis, level, origin and horizon. MAE, RMSE, WAPE and bias are always recomputed from the sums (sum of errors / sum of observations). They are never averaged or added across rows."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

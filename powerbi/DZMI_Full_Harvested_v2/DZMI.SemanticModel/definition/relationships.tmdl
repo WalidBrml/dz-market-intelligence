@@ -1,0 +1,116 @@
+relationship e8998cb6-85c2-5eef-9800-23203938c18a
+	fromColumn: fact_sales.date_key
+	toColumn: dim_date.date_key
+
+relationship a7526764-4f99-5780-8f43-3a5db49b475a
+	fromColumn: fact_sales.store_key
+	toColumn: dim_store.store_key
+
+relationship 4fb2e73d-7e12-508a-a2df-2f69549fe232
+	fromColumn: fact_sales.product_key
+	toColumn: dim_product.product_key
+
+relationship 32e64ae8-07c3-5ff4-abcf-7ad068fad221
+	fromColumn: fact_sales.customer_key
+	toColumn: dim_customer.customer_key
+
+relationship fdf9b591-7dc5-5c70-9229-42c3822d5ac2
+	fromColumn: fact_sales.promotion_key
+	toColumn: dim_promotion.promotion_key
+
+relationship 536837e4-838a-5fed-99d3-cc08017791a7
+	fromColumn: fact_inventory_daily.date_key
+	toColumn: dim_date.date_key
+
+relationship 1e51df25-17d2-5a74-8d17-12d929d4cf79
+	fromColumn: fact_inventory_daily.store_key
+	toColumn: dim_store.store_key
+
+relationship 679838d0-23a6-5d07-a3ae-3f7700eda964
+	fromColumn: fact_inventory_daily.product_key
+	toColumn: dim_product.product_key
+
+relationship d6575077-8f41-5261-be4c-19b1f7abc2ee
+	fromColumn: fact_promotions.date_key
+	toColumn: dim_date.date_key
+
+relationship ce391dfb-ef28-5a98-848a-a9a3046dd970
+	fromColumn: fact_promotions.store_key
+	toColumn: dim_store.store_key
+
+relationship 8352868f-af35-5226-86e9-a21ebf28edb9
+	fromColumn: fact_promotions.product_key
+	toColumn: dim_product.product_key
+
+relationship d0c3ed29-c81f-5b2d-bf05-b361dd9b339c
+	fromColumn: fact_promotions.promotion_key
+	toColumn: dim_promotion.promotion_key
+
+relationship 6fdf4044-b1f7-5867-aec2-2cfc9fa51cbe
+	fromColumn: v_inventory_risk.store_key
+	toColumn: dim_store.store_key
+
+relationship 0d6c6351-042e-50b7-af97-1027b9d726b3
+	fromColumn: v_inventory_risk.product_key
+	toColumn: dim_product.product_key
+
+relationship 4381d939-9ab5-5d7f-963a-daf35d4a7bbb
+	fromColumn: forecast_backtest_metric.model_name
+	toColumn: dim_model.model_name
+
+relationship e1895fca-76b0-5d11-8404-e6120d80b2a1
+	fromColumn: forecast_backtest_metric.evaluation_basis
+	toColumn: dim_eval_basis.evaluation_basis
+
+relationship a362a631-ac9f-5d50-813a-f18e679caa59
+	fromColumn: forecast_backtest_metric.level
+	toColumn: dim_eval_level.level
+
+relationship c3383ca8-41aa-554d-b670-8c54caabfcdc
+	fromColumn: forecast_backtest_metric.horizon_key
+	toColumn: dim_horizon.horizon_key
+
+relationship 277189ee-d823-5adb-a5a1-41b623f47dc1
+	fromColumn: forecast_backtest_metric.origin_date
+	toColumn: dim_origin.origin_date
+
+relationship e7b95062-c4c8-543b-bbb8-9ffa9052b895
+	fromColumn: forecast_backtest_metric.backtest_run_id
+	toColumn: backtest_run.backtest_run_id
+
+relationship a7e34899-ff3d-545b-9d24-cc90d81bf056
+	fromColumn: v_forecast_accuracy.model_name
+	toColumn: dim_model.model_name
+
+relationship 799165ce-9790-585d-9273-db03566b0586
+	fromColumn: v_forecast_accuracy.evaluation_basis
+	toColumn: dim_eval_basis.evaluation_basis
+
+relationship 4675e058-4283-59ad-a87b-99acf0c091b8
+	fromColumn: v_forecast_accuracy.level
+	toColumn: dim_eval_level.level
+
+relationship 90dd760c-9cd7-5bcb-a96d-8ffea02e34d1
+	fromColumn: v_forecast_accuracy.backtest_run_id
+	toColumn: backtest_run.backtest_run_id
+
+relationship 2e43b87e-b7c6-5fb1-9ab6-5aaa73c140b8
+	fromColumn: v_forecast_accuracy_by_horizon.model_name
+	toColumn: dim_model.model_name
+
+relationship 0999cfbe-4c28-5158-82cb-ac5e907f43da
+	fromColumn: v_forecast_accuracy_by_horizon.evaluation_basis
+	toColumn: dim_eval_basis.evaluation_basis
+
+relationship 8e92c5da-fd9f-57b0-8315-71a0142d85f7
+	fromColumn: v_forecast_accuracy_by_horizon.level
+	toColumn: dim_eval_level.level
+
+relationship 1f820c17-28fe-5fac-bbe0-41e809db8593
+	fromColumn: v_forecast_accuracy_by_horizon.horizon_key
+	toColumn: dim_horizon.horizon_key
+
+relationship 698941cf-6ff7-5221-b3cd-f7b7f9b0e263
+	fromColumn: v_forecast_accuracy_by_horizon.backtest_run_id
+	toColumn: backtest_run.backtest_run_id
+

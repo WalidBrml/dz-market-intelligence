@@ -1,0 +1,155 @@
+/// Sales at transaction-line grain (dwh.fact_sales).
+table fact_sales
+	lineageTag: 58b12c23-f990-5d07-a787-b1bec483f6f7
+
+	column sales_line_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ade331a8-db94-5828-81b4-83f0867a98ed
+		summarizeBy: none
+		sourceColumn: sales_line_id
+
+	column transaction_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 025890d0-6bc2-5ea6-b6d1-83430efed07b
+		summarizeBy: none
+		sourceColumn: transaction_id
+
+	column line_no
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0d1cc0e6-fbeb-5c35-8a79-9cf58af0b837
+		summarizeBy: none
+		sourceColumn: line_no
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: fc48ecbd-b699-5930-bd7c-1f62bcab6e3a
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column store_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a7e9f1c6-8415-5426-897b-caa540cd0d1e
+		summarizeBy: none
+		sourceColumn: store_key
+
+	column product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 14edb149-007c-59c5-9e5c-2846ad5bfab7
+		summarizeBy: none
+		sourceColumn: product_key
+
+	column customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 44577c17-aa3b-5744-8db6-48a0608099da
+		summarizeBy: none
+		sourceColumn: customer_key
+
+	column promotion_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 308992a2-95c2-5752-95f1-969f58a251be
+		summarizeBy: none
+		sourceColumn: promotion_key
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 212038e9-c872-53a2-810f-b83e79be1351
+		summarizeBy: none
+		sourceColumn: quantity
+
+	column unit_price
+		dataType: double
+		formatString: #,0.00
+		lineageTag: b61b7625-9f0a-5d8e-9392-2f8caf400875
+		summarizeBy: none
+		sourceColumn: unit_price
+
+	column unit_cost
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 8de4fc93-fa6d-5253-801d-5271bf213aca
+		summarizeBy: none
+		sourceColumn: unit_cost
+
+	column gross_sales
+		dataType: double
+		formatString: #,0.00
+		lineageTag: db65f103-ba9a-5c05-be90-bc938fe119a3
+		summarizeBy: none
+		sourceColumn: gross_sales
+
+	column discount_amount
+		dataType: double
+		formatString: #,0.00
+		lineageTag: b9aebe6b-686b-5550-868d-0aa68dc31057
+		summarizeBy: none
+		sourceColumn: discount_amount
+
+	column net_sales
+		dataType: double
+		formatString: #,0.00
+		lineageTag: ea323b94-6dd4-52fc-8aa1-08cdb71aca89
+		summarizeBy: none
+		sourceColumn: net_sales
+
+	column cogs
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 90f3781b-e997-5434-ba87-047894e88e2b
+		summarizeBy: none
+		sourceColumn: cogs
+
+	column gross_profit
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 67d8072f-79f2-5e34-9711-95b0df8faeb7
+		summarizeBy: none
+		sourceColumn: gross_profit
+
+	partition fact_sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "fact_sales.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"sales_line_id", Int64.Type},
+				            {"transaction_id", Int64.Type},
+				            {"line_no", Int64.Type},
+				            {"date_key", Int64.Type},
+				            {"store_key", Int64.Type},
+				            {"product_key", Int64.Type},
+				            {"customer_key", Int64.Type},
+				            {"promotion_key", Int64.Type},
+				            {"quantity", Int64.Type},
+				            {"unit_price", type number},
+				            {"unit_cost", type number},
+				            {"gross_sales", type number},
+				            {"discount_amount", type number},
+				            {"net_sales", type number},
+				            {"cogs", type number},
+				            {"gross_profit", type number}
+				        },
+				        "en-US"
+				    )
+				in
+				    Typed
+

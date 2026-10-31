@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "DZMI_Starter"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2bce8fee-31cc-4350-940a-e61e88ba4a17"
+  }
+}

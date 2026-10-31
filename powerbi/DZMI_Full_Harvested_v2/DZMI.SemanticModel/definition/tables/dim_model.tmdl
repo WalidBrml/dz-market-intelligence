@@ -1,0 +1,64 @@
+/// Forecasting models with display labels (from docs/forecasting.md).
+table dim_model
+	lineageTag: 5981346a-2fea-5968-816a-d5bae2295ba3
+
+	column model_name
+		dataType: string
+		isHidden
+		lineageTag: 5832f70f-02f5-5c90-9efd-d824a34810c0
+		summarizeBy: none
+		sourceColumn: model_name
+
+	column model_label
+		dataType: string
+		lineageTag: 259ddca6-e49e-5041-b639-bb7cb30ac1f3
+		summarizeBy: none
+		sourceColumn: model_label
+		sortByColumn: model_order
+
+	column model_family
+		dataType: string
+		lineageTag: 68ca5471-c2a7-59b4-b1a3-897c8ac5aa25
+		summarizeBy: none
+		sourceColumn: model_family
+
+	column model_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ca910c3b-005b-58ae-af9e-39259da4afee
+		summarizeBy: none
+		sourceColumn: model_order
+
+	column is_benchmark
+		dataType: boolean
+		isHidden
+		lineageTag: cee48424-c1d3-51f7-b138-e7e66cf976e4
+		summarizeBy: none
+		sourceColumn: is_benchmark
+
+	partition dim_model = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "forecast_backtest_metric.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Distinct = Table.Distinct(Table.SelectColumns(Promoted, {"model_name"})),
+				    Meta = [
+				        naive = {"Naive", "Baseline", 1, false},
+				        seasonal_naive = {"Seasonal naive (benchmark)", "Baseline", 2, true},
+				        moving_average = {"Moving average", "Baseline", 3, false},
+				        ses_weekday = {"Exp. smoothing + weekday", "Statistical", 4, false},
+				        croston_sba = {"Croston-SBA", "Intermittent demand", 5, false},
+				        gbm = {"Gradient boosting", "Machine learning", 6, false}
+				    ],
+				    Lookup = (key as text, idx as number, fallback as any) as any =>
+				        let m = Record.FieldOrDefault(Meta, key, null) in if m = null then fallback else m{idx},
+				    Labelled = Table.AddColumn(Distinct, "model_label", each Lookup([model_name], 0, [model_name]), type text),
+				    Family = Table.AddColumn(Labelled, "model_family", each Lookup([model_name], 1, "Other"), type text),
+				    Seq = Table.AddColumn(Family, "model_order", each Lookup([model_name], 2, 99), Int64.Type),
+				    Bench = Table.AddColumn(Seq, "is_benchmark", each Lookup([model_name], 3, false), type logical),
+				    Ordered = Table.ReorderColumns(Bench, {"model_name", "model_label", "model_family", "model_order", "is_benchmark"})
+				in
+				    Ordered
+

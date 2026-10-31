@@ -1,0 +1,177 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "6b746ab47d21595f9023",
+  "position": {
+    "x": 356,
+    "y": 478,
+    "z": 15000,
+    "height": 242,
+    "width": 924,
+    "tabOrder": 15000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "v_inventory_risk"
+                    }
+                  },
+                  "Property": "risk_tier"
+                }
+              },
+              "queryRef": "v_inventory_risk.risk_tier",
+              "nativeQueryRef": "risk_tier",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "v_inventory_risk"
+                    }
+                  },
+                  "Property": "store_code"
+                }
+              },
+              "queryRef": "v_inventory_risk.store_code",
+              "nativeQueryRef": "store_code",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "v_inventory_risk"
+                    }
+                  },
+                  "Property": "sku"
+                }
+              },
+              "queryRef": "v_inventory_risk.sku",
+              "nativeQueryRef": "sku",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "v_inventory_risk"
+                    }
+                  },
+                  "Property": "product_name"
+                }
+              },
+              "queryRef": "v_inventory_risk.product_name",
+              "nativeQueryRef": "product_name",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "v_inventory_risk"
+                    }
+                  },
+                  "Property": "closing_stock"
+                }
+              },
+              "queryRef": "v_inventory_risk.closing_stock",
+              "nativeQueryRef": "closing_stock",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "v_inventory_risk"
+                    }
+                  },
+                  "Property": "avg_daily_units_14d"
+                }
+              },
+              "queryRef": "v_inventory_risk.avg_daily_units_14d",
+              "nativeQueryRef": "avg_daily_units_14d",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "v_inventory_risk"
+                    }
+                  },
+                  "Property": "days_of_cover"
+                }
+              },
+              "queryRef": "v_inventory_risk.days_of_cover",
+              "nativeQueryRef": "days_of_cover",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "v_inventory_risk"
+                    }
+                  },
+                  "Property": "stock_value_at_current_cost"
+                }
+              },
+              "queryRef": "v_inventory_risk.stock_value_at_current_cost",
+              "nativeQueryRef": "stock_value_at_current_cost",
+              "active": true
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "v_inventory_risk"
+                  }
+                },
+                "Property": "risk_tier"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'SKU risk list, most urgent tier first (latest day)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

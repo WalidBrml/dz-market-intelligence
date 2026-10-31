@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "03baeffc98495a1781eb",
+  "position": {
+    "x": 19.733707077785567,
+    "y": 45.746320953048354,
+    "z": 2000,
+    "height": 34.085494043447795,
+    "width": 900.57463209530488,
+    "tabOrder": 2000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "SYNTHETIC DATA - demonstration only. Nothing here describes real Algerian retail demand.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#6b7785"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Header - Synthetic Data Disclaimer'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

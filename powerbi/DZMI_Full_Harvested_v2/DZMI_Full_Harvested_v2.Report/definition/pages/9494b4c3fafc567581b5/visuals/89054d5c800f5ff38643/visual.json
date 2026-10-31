@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "89054d5c800f5ff38643",
+  "position": {
+    "x": 20,
+    "y": 500,
+    "z": 17000,
+    "height": 96,
+    "width": 150,
+    "tabOrder": 17000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Stockout SKUs Now"
+                }
+              },
+              "queryRef": "_Measures.Stockout SKUs Now",
+              "nativeQueryRef": "Stockout SKUs Now"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Stockout now (SKUs)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

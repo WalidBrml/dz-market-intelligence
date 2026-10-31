@@ -1,0 +1,101 @@
+product_key,product_id,sku,product_name,category_name,is_perishable,brand,pack_size,current_list_price,current_unit_cost
+1,1,FLO-0001,Fine semolina 5 kg (Brand D),Flour & Semolina,False,Brand D,12,140,126.83
+2,2,FLO-0002,Wheat flour T45 1 kg (Brand C),Flour & Semolina,False,Brand C,12,235,207.73
+3,3,FLO-0003,Wheat flour T45 5 kg (Brand A),Flour & Semolina,False,Brand A,12,235,215.93
+4,4,FLO-0004,Wheat flour T45 2 kg (Brand H),Flour & Semolina,False,Brand H,6,125,113.39
+5,5,FLO-0005,Fine semolina 2 kg (Brand E),Flour & Semolina,False,Brand E,12,195,166.12
+6,6,FLO-0006,Medium semolina 1 kg (Brand A),Flour & Semolina,False,Brand A,6,140,127.29
+7,7,FLO-0007,Fine semolina 1 kg (Brand F),Flour & Semolina,False,Brand F,12,175,150.13
+8,8,PAS-0008,Vermicelli 500 g (Brand D),Pasta & Couscous,False,Brand D,24,135,120.87
+9,9,PAS-0009,Medium couscous 500 g (Brand J),Pasta & Couscous,False,Brand J,12,185,157.31
+10,10,PAS-0010,Short pasta 1 kg (Brand C),Pasta & Couscous,False,Brand C,12,145,121.35
+11,11,PAS-0011,Spaghetti 500 g (Brand F),Pasta & Couscous,False,Brand F,12,55,49.16
+12,12,PAS-0012,Vermicelli 1 kg (Brand J),Pasta & Couscous,False,Brand J,24,110,97.01
+13,13,PAS-0013,Fine couscous 1 kg (Brand D),Pasta & Couscous,False,Brand D,12,205,170.19
+14,14,PAS-0014,Fine couscous 500 g (Brand A),Pasta & Couscous,False,Brand A,24,205,173.8
+15,15,PAS-0015,Spaghetti 1 kg (Brand B),Pasta & Couscous,False,Brand B,24,140,114.99
+16,16,OIL-0016,Table salt 5 L (Brand D),"Oil, Sugar & Salt",False,Brand D,12,260,238.2
+17,17,OIL-0017,White sugar 2 L (Brand B),"Oil, Sugar & Salt",False,Brand B,12,360,321.15
+18,18,OIL-0018,Table salt 2 L (Brand B),"Oil, Sugar & Salt",False,Brand B,6,85,76.39
+19,19,OIL-0019,Mixed vegetable oil 5 L (Brand H),"Oil, Sugar & Salt",False,Brand H,12,115,105.92
+20,20,OIL-0020,Table salt 1 L (Brand A),"Oil, Sugar & Salt",False,Brand A,6,220,201.15
+21,21,OIL-0021,Mixed vegetable oil 1 kg (Brand B),"Oil, Sugar & Salt",False,Brand B,12,235,219.38
+22,22,DAI-0022,Processed cheese 6-pack (Brand F),Dairy & Eggs,True,Brand F,12,35,28.6
+23,23,DAI-0023,Fruit yogurt 1 L (Brand I),Dairy & Eggs,True,Brand I,12,165,145.69
+24,24,DAI-0024,Eggs 1 L (Brand I),Dairy & Eggs,True,Brand I,12,165,141.38
+25,25,DAI-0025,Fruit yogurt 500 g (Brand A),Dairy & Eggs,True,Brand A,6,285,248.76
+26,26,DAI-0026,Fruit yogurt 6-pack (Brand D),Dairy & Eggs,True,Brand D,12,270,218.23
+27,27,DAI-0027,Eggs 500 g (Brand G),Dairy & Eggs,True,Brand G,12,40,32.89
+28,28,DAI-0028,Eggs 200 g (Brand A),Dairy & Eggs,True,Brand A,12,375,313.34
+29,29,DAI-0029,Plain yogurt 6-pack (Brand A),Dairy & Eggs,True,Brand A,12,520,436.42
+30,30,DAI-0030,Plain yogurt 1 L (Brand F),Dairy & Eggs,True,Brand F,12,320,267.97
+31,31,DAI-0031,Fresh milk 1 L (Brand J),Dairy & Eggs,True,Brand J,12,70,56.39
+32,32,DAT-0032,Dates (premium) 1 kg (Brand A),Dates & Dried Fruit,False,Brand A,12,1450,1235.26
+33,33,DAT-0033,Almonds 500 g (Brand J),Dates & Dried Fruit,False,Brand J,12,660,496.21
+34,34,DAT-0034,Dates (standard) 1 kg (Brand E),Dates & Dried Fruit,False,Brand E,12,305,231.01
+35,35,DAT-0035,Raisins 500 g (Brand J),Dates & Dried Fruit,False,Brand J,12,895,669.9
+36,36,DAT-0036,Dried apricots 1 kg (Brand J),Dates & Dried Fruit,False,Brand J,6,1160,862.0
+37,37,COF-0037,Herbal infusion 250 g (Brand A),"Coffee, Tea & Infusions",False,Brand A,12,345,294.35
+38,38,COF-0038,Black tea 250 g (Brand E),"Coffee, Tea & Infusions",False,Brand E,6,1005,850.24
+39,39,COF-0039,Black tea 100 bags (Brand D),"Coffee, Tea & Infusions",False,Brand D,12,565,475.22
+40,40,COF-0040,Instant coffee 500 g (Brand G),"Coffee, Tea & Infusions",False,Brand G,12,710,553.89
+41,41,COF-0041,Ground coffee 100 bags (Brand G),"Coffee, Tea & Infusions",False,Brand G,6,290,245.82
+42,42,COF-0042,Black tea 500 g (Brand F),"Coffee, Tea & Infusions",False,Brand F,6,350,293.05
+43,43,BEV-0043,Lemon soda 1.5 L (Brand H),Water & Soft Drinks,False,Brand H,6,40,32.18
+44,44,BEV-0044,Fruit juice 1.5 L (Brand J),Water & Soft Drinks,False,Brand J,6,120,100.79
+45,45,BEV-0045,Orange drink 2 L (Brand C),Water & Soft Drinks,False,Brand C,6,55,45.99
+46,46,BEV-0046,Lemon soda 2 L (Brand A),Water & Soft Drinks,False,Brand A,6,75,62.61
+47,47,BEV-0047,Still water 2 L (Brand C),Water & Soft Drinks,False,Brand C,6,210,167.61
+48,48,BEV-0048,Cola drink 500 ml (Brand C),Water & Soft Drinks,False,Brand C,12,60,47.17
+49,49,BEV-0049,Cola drink 2 L (Brand G),Water & Soft Drinks,False,Brand G,12,90,72.1
+50,50,BEV-0050,Fruit juice 500 ml (Brand C),Water & Soft Drinks,False,Brand C,6,35,28.93
+51,51,BEV-0051,Orange drink 500 ml (Brand F),Water & Soft Drinks,False,Brand F,6,235,188.86
+52,52,BEV-0052,Lemon soda 500 ml (Brand H),Water & Soft Drinks,False,Brand H,6,195,164.87
+53,53,CAN-0053,Olives 400 g (Brand E),Canned & Preserved,False,Brand E,24,350,291.74
+54,54,CAN-0054,Harissa 400 g (Brand J),Canned & Preserved,False,Brand J,24,80,64.13
+55,55,CAN-0055,Olives 200 g (Brand I),Canned & Preserved,False,Brand I,12,205,178.02
+56,56,CAN-0056,Harissa 200 g (Brand B),Canned & Preserved,False,Brand B,12,235,195.45
+57,57,CAN-0057,Tomato paste 400 g (Brand A),Canned & Preserved,False,Brand A,24,145,129.52
+58,58,CAN-0058,Canned chickpeas 400 g (Brand I),Canned & Preserved,False,Brand I,12,340,297.79
+59,59,CAN-0059,Canned tuna 800 g (Brand E),Canned & Preserved,False,Brand E,12,175,155.79
+60,60,LEG-0060,Long-grain rice 2 kg (Brand G),Legumes & Rice,False,Brand G,20,120,106.63
+61,61,LEG-0061,Chickpeas 1 kg (Brand I),Legumes & Rice,False,Brand I,10,315,278.19
+62,62,LEG-0062,Lentils 1 kg (Brand F),Legumes & Rice,False,Brand F,10,225,198.83
+63,63,LEG-0063,Long-grain rice 1 kg (Brand J),Legumes & Rice,False,Brand J,20,180,160.65
+64,64,LEG-0064,White beans 2 kg (Brand J),Legumes & Rice,False,Brand J,20,110,99.46
+65,65,LEG-0065,Freekeh 1 kg (Brand F),Legumes & Rice,False,Brand F,10,155,141.99
+66,66,MEA-0066,Lamb pieces 1 kg (Brand E),Frozen Meat & Poultry,True,Brand E,5,490,395.97
+67,67,MEA-0067,Lamb pieces 500 g (Brand G),Frozen Meat & Poultry,True,Brand G,5,515,457.31
+68,68,MEA-0068,Chicken escalope 1 kg (Brand B),Frozen Meat & Poultry,True,Brand B,5,1585,1273.0
+69,69,MEA-0069,Chicken escalope 500 g (Brand F),Frozen Meat & Poultry,True,Brand F,5,1200,1072.95
+70,70,MEA-0070,Frozen chicken 1 kg (Brand F),Frozen Meat & Poultry,True,Brand F,10,2380,1951.55
+71,71,MEA-0071,Merguez 1 kg (Brand E),Frozen Meat & Poultry,True,Brand E,5,1055,898.49
+72,72,BAK-0072,Cake box of 12 (Brand B),Bakery & Pastry,True,Brand B,6,80,58.61
+73,73,BAK-0073,Honey pastry box of 6 (Brand C),Bakery & Pastry,True,Brand C,6,145,91.98
+74,74,BAK-0074,Cake single (Brand B),Bakery & Pastry,True,Brand B,6,165,117.81
+75,75,BAK-0075,Brioche box of 6 (Brand F),Bakery & Pastry,True,Brand F,6,35,22.35
+76,76,BAK-0076,Biscuits box of 12 (Brand C),Bakery & Pastry,True,Brand C,12,35,24.77
+77,77,BAK-0077,Biscuits single (Brand H),Bakery & Pastry,True,Brand H,6,35,26.59
+78,78,BAK-0078,Traditional pastry box of 12 (Brand G),Bakery & Pastry,True,Brand G,6,80,62.81
+79,79,FRV-0079,Apples 2 kg (Brand H),Fresh Fruit & Vegetables,True,Brand H,5,45,35.92
+80,80,FRV-0080,Carrots 1 kg (Brand I),Fresh Fruit & Vegetables,True,Brand I,10,370,279.58
+81,81,FRV-0081,Onions 1 kg (Brand B),Fresh Fruit & Vegetables,True,Brand B,10,45,35.71
+82,82,FRV-0082,Oranges 1 kg (Brand F),Fresh Fruit & Vegetables,True,Brand F,10,250,183.6
+83,83,FRV-0083,Oranges 2 kg (Brand B),Fresh Fruit & Vegetables,True,Brand B,5,370,300.47
+84,84,FRV-0084,Tomatoes 1 kg (Brand J),Fresh Fruit & Vegetables,True,Brand J,10,70,59.29
+85,85,FRV-0085,Onions 2 kg (Brand F),Fresh Fruit & Vegetables,True,Brand F,10,95,79.0
+86,86,FRV-0086,Potatoes 2 kg (Brand C),Fresh Fruit & Vegetables,True,Brand C,10,105,77.76
+87,87,FRV-0087,Apples 1 kg (Brand D),Fresh Fruit & Vegetables,True,Brand D,5,45,37.12
+88,88,FRV-0088,Peppers 1 kg (Brand C),Fresh Fruit & Vegetables,True,Brand C,10,50,36.46
+89,89,CLE-0089,Laundry powder 1 L (Brand C),Household Cleaning,False,Brand C,12,255,202.27
+90,90,CLE-0090,Floor cleaner 1 L (Brand J),Household Cleaning,False,Brand J,6,140,107.84
+91,91,CLE-0091,Dish liquid 500 ml (Brand H),Household Cleaning,False,Brand H,12,125,93.68
+92,92,CLE-0092,Laundry powder 3 kg (Brand J),Household Cleaning,False,Brand J,12,130,107.47
+93,93,CLE-0093,Sponges 500 ml (Brand I),Household Cleaning,False,Brand I,6,555,446.43
+94,94,CLE-0094,Dish liquid 1 L (Brand F),Household Cleaning,False,Brand F,12,205,162.88
+95,95,PER-0095,Hand cream 250 ml (Brand J),Personal Care,False,Brand J,12,720,472.15
+96,96,PER-0096,Soap bar 250 ml (Brand C),Personal Care,False,Brand C,12,615,483.13
+97,97,PER-0097,Deodorant 400 ml (Brand A),Personal Care,False,Brand A,12,730,503.7
+98,98,PER-0098,Hand cream 400 ml (Brand F),Personal Care,False,Brand F,12,875,610.19
+99,99,PER-0099,Deodorant 100 ml (Brand C),Personal Care,False,Brand C,12,545,382.47
+100,100,PER-0100,Shampoo 100 ml (Brand J),Personal Care,False,Brand J,6,160,108.64

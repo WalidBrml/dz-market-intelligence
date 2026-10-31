@@ -1,0 +1,44 @@
+# Full-scale profile. All values are SIMULATION ASSUMPTIONS, not real market statistics.
+profile: default
+seed: 20230101
+n_stores: 15
+n_products: 500
+start_date: 2023-01-01
+end_date: 2025-12-31
+n_customers: 20000
+loyalty_share: 0.35            # share of transactions linked to a loyalty customer
+assortment_fraction: 0.55      # share of the catalogue each store carries
+demand:
+  dispersion: 4.0              # gamma-Poisson shape k (smaller = burstier demand)
+  demand_scale: 0.03           # tuned so the full profile yields ~450-550k sales lines (see README: volume tuning)
+  popularity_sigma: 0.8        # lognormal sigma of product popularity
+  store_sigma: 0.25            # lognormal sigma of store size effect
+  annual_growth: 0.03          # underlying volume trend per year
+  weekday_multipliers: [0.90, 0.90, 0.95, 1.15, 1.20, 1.15, 0.95]   # Mon..Sun
+  eid_day_multiplier: 0.35     # shops largely closed / quiet on Eid days
+  summer_peak_day_of_year: 200
+promotions:
+  campaigns_per_year: 10
+  product_share: 0.15
+  store_share: 0.6
+  min_days: 7
+  max_days: 14
+  discount_choices: [5, 10, 15, 20, 25, 30]
+  ramadan_campaign: true
+prices:
+  annual_inflation_min: 0.00
+  annual_inflation_max: 0.07
+inventory:
+  lead_time_min: 1
+  lead_time_max: 3
+  cover_days: 7                # order-up-to level = reorder point + cover_days of demand
+  service_z: 1.28              # safety-stock z (about 90% cycle service under normality)
+  ewma_alpha: 0.05             # retailer's demand estimate learns from OBSERVED (censored) sales
+  supplier_shortfall_prob: 0.03
+  supplier_shortfall_min_fill: 0.4
+  supplier_shortfall_max_fill: 0.9
+baskets:
+  avg_lines_per_basket: 9.0
+  split_probability: 0.35      # chance an extra purchase line is created per additional unit
+  open_hour: 8
+  close_hour: 22

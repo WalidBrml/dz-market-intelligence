@@ -1,0 +1,53 @@
+/// Evaluation bases.
+table dim_eval_basis
+	lineageTag: b395f192-a289-51c8-83eb-691b28ca4756
+
+	column evaluation_basis
+		dataType: string
+		isHidden
+		lineageTag: a7e48c51-2b54-57ce-b842-63ace56453e5
+		summarizeBy: none
+		sourceColumn: evaluation_basis
+
+	column basis_label
+		dataType: string
+		lineageTag: 11e17878-e2fe-5aff-b5c4-af72570a7be6
+		summarizeBy: none
+		sourceColumn: basis_label
+		sortByColumn: basis_order
+
+	column basis_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 781f1d71-3e01-59b7-9200-327cefb3a095
+		summarizeBy: none
+		sourceColumn: basis_order
+
+	column basis_description
+		dataType: string
+		lineageTag: dca1c845-ab6d-5de4-84dc-519f3fdb3c80
+		summarizeBy: none
+		sourceColumn: basis_description
+
+	partition dim_eval_basis = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "forecast_backtest_metric.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Distinct = Table.Distinct(Table.SelectColumns(Promoted, {"evaluation_basis"})),
+				    Meta = [
+				        observed = {"Observed sales", 1, "Observed units sold, every day: what a retailer can measure"},
+				        observed_uncensored = {"Observed, no-stockout days", 2, "Observed sales without days that ended with zero stock"},
+				        latent_simulation_only = {"Latent demand (simulation only)", 3, "Simulator ground truth: unobservable in real life"}
+				    ],
+				    Lookup = (key as text, idx as number, fallback as any) as any =>
+				        let m = Record.FieldOrDefault(Meta, key, null) in if m = null then fallback else m{idx},
+				    Labelled = Table.AddColumn(Distinct, "basis_label", each Lookup([evaluation_basis], 0, [evaluation_basis]), type text),
+				    Seq = Table.AddColumn(Labelled, "basis_order", each Lookup([evaluation_basis], 1, 99), Int64.Type),
+				    Described = Table.AddColumn(Seq, "basis_description", each Lookup([evaluation_basis], 2, ""), type text),
+				    Ordered = Table.ReorderColumns(Described, {"evaluation_basis", "basis_label", "basis_order", "basis_description"})
+				in
+				    Ordered
+

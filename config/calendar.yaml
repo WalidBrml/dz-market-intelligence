@@ -1,0 +1,21 @@
+# Religious calendar used for the simulation.
+# ASSUMPTION: dates are APPROXIMATE (Algeria follows moon sighting, +/- 1 day).
+# They only drive simulated demand effects; edit freely. Dates are inclusive.
+weekend_weekdays: [4, 5]        # Monday=0 ... Friday=4, Saturday=5 (Algerian weekend)
+pre_eid_al_fitr_days: 7         # shopping run-up window before Eid al-Fitr
+pre_eid_al_adha_days: 5         # run-up window before Eid al-Adha
+ramadan:
+  - [2023-03-23, 2023-04-20]
+  - [2024-03-11, 2024-04-09]
+  - [2025-03-01, 2025-03-29]
+  - [2026-02-18, 2026-03-19]
+eid_al_fitr:
+  - [2023-04-21, 2023-04-22]
+  - [2024-04-10, 2024-04-11]
+  - [2025-03-30, 2025-03-31]
+  - [2026-03-20, 2026-03-21]
+eid_al_adha:
+  - [2023-06-28, 2023-06-29]
+  - [2024-06-16, 2024-06-17]
+  - [2025-06-06, 2025-06-07]
+  - [2026-05-27, 2026-05-28]

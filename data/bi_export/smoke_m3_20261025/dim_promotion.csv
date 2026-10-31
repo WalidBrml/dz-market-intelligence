@@ -1,0 +1,5 @@
+promotion_key,promotion_name,promotion_type,discount_pct,start_date,end_date
+1,Clearance 15% #001,Clearance,15,2025-02-19,2025-02-25
+2,Seasonal discount 30% #002,Seasonal discount,30,2025-02-22,2025-02-28
+3,Ramadan campaign 10% #003,Ramadan campaign,10,2025-02-26,2025-03-11
+4,Weekend deal 20% #004,Weekend deal,20,2025-03-29,2025-04-04

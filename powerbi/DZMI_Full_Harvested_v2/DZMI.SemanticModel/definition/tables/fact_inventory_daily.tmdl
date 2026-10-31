@@ -1,0 +1,93 @@
+/// Daily stock per store x product (dwh.fact_inventory_daily). Stock levels are snapshots: never sum them across dates.
+table fact_inventory_daily
+	lineageTag: d10bec48-beba-5764-b40d-425ed8355a44
+
+	column store_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 982ddfc9-55b3-549d-8b01-576febf7ff2a
+		summarizeBy: none
+		sourceColumn: store_key
+
+	column product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d5652ffc-546f-5594-9064-1dcee2ef168c
+		summarizeBy: none
+		sourceColumn: product_key
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7c54385b-dce0-53c9-9bba-4b095cd26d24
+		summarizeBy: none
+		sourceColumn: date_key
+
+	column opening_stock
+		dataType: int64
+		formatString: 0
+		lineageTag: 48d18719-833b-552e-9996-fc59d09eab99
+		summarizeBy: none
+		sourceColumn: opening_stock
+
+	column received_qty
+		dataType: int64
+		formatString: 0
+		lineageTag: eb3d0f39-8207-595f-bccf-3a3d3a88cea5
+		summarizeBy: none
+		sourceColumn: received_qty
+
+	column units_sold
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c27ef51-1573-53e3-ac52-58d5ff35cb5e
+		summarizeBy: none
+		sourceColumn: units_sold
+
+	column closing_stock
+		dataType: int64
+		formatString: 0
+		lineageTag: 8bb82b64-c91a-50fe-97cf-e6b69ae41f77
+		summarizeBy: none
+		sourceColumn: closing_stock
+
+	column on_order_qty
+		dataType: int64
+		formatString: 0
+		lineageTag: 71cf22a6-20af-5447-9055-c8a3c3216201
+		summarizeBy: none
+		sourceColumn: on_order_qty
+
+	column stockout_flag
+		dataType: boolean
+		lineageTag: 9fd24427-2e2d-5f9f-8302-72d930a69a75
+		summarizeBy: none
+		sourceColumn: stockout_flag
+
+	partition fact_inventory_daily = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "fact_inventory_daily.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"store_key", Int64.Type},
+				            {"product_key", Int64.Type},
+				            {"date_key", Int64.Type},
+				            {"opening_stock", Int64.Type},
+				            {"received_qty", Int64.Type},
+				            {"units_sold", Int64.Type},
+				            {"closing_stock", Int64.Type},
+				            {"on_order_qty", Int64.Type},
+				            {"stockout_flag", type logical}
+				        },
+				        "en-US"
+				    )
+				in
+				    Typed
+

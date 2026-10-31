@@ -1,0 +1,62 @@
+/// Loyalty customers (dwh.dim_customer).
+table dim_customer
+	lineageTag: 0b3a7d3d-ab02-5c84-aa64-13dc5be9732f
+
+	column customer_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: de63091f-4ca6-5b42-836c-29258ce5b410
+		summarizeBy: none
+		sourceColumn: customer_key
+
+	column customer_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e35cc4cd-7ec7-5575-afaf-139b3ec7b8c4
+		summarizeBy: none
+		sourceColumn: customer_id
+
+	column wilaya
+		dataType: string
+		lineageTag: d47c9fe1-d6a2-5274-a491-28d6d4d135fe
+		summarizeBy: none
+		sourceColumn: wilaya
+
+	column household_type
+		dataType: string
+		lineageTag: e1dbe7a0-a106-5fc1-8ccb-81ae52aa6c9d
+		summarizeBy: none
+		sourceColumn: household_type
+
+	column signup_date
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: aaa788eb-66b2-5760-8f5c-3ab7e508ea5d
+		summarizeBy: none
+		sourceColumn: signup_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition dim_customer = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(pDataFolder & "dim_customer.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(
+				        Promoted,
+				        {
+				            {"customer_key", Int64.Type},
+				            {"customer_id", Int64.Type},
+				            {"wilaya", type text},
+				            {"household_type", type text},
+				            {"signup_date", type date}
+				        },
+				        "en-US"
+				    )
+				in
+				    Typed
+

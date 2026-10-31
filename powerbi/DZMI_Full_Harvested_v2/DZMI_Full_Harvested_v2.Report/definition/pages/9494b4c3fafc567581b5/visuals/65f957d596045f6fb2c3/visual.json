@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "65f957d596045f6fb2c3",
+  "position": {
+    "x": 20,
+    "y": 604,
+    "z": 19000,
+    "height": 96,
+    "width": 150,
+    "tabOrder": 19000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Low Cover SKUs"
+                }
+              },
+              "queryRef": "_Measures.Low Cover SKUs",
+              "nativeQueryRef": "Low Cover SKUs"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Low (3-7 days)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
